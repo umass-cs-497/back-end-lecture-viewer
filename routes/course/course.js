@@ -14,13 +14,13 @@ router.get('/:id', function(req,res) {
 
 //Edit course
 router.put('/:id', function(req,res) {
-    var cid = req.params.id
+    var cid = req.params.id;
     
 });
 
 //Delete course
 router.delete('/:id', function(req,res) {
-    var cid = req.params.id
+    var cid = req.params.id;
     
 });
 
