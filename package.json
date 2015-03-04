@@ -1,0 +1,14 @@
+{
+  "name": "lecture-viewer-back-end",
+  "version": "0.0.0",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "express": "~4.9.0"
+  }
+}
