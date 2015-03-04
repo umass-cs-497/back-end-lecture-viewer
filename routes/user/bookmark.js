@@ -21,13 +21,13 @@ router.get('/:cid/lecture/:lid', function(req,res) {
 
 //Delete specific bookmark
 router.delete('/:id', function(req,res) {
-    var bid = req.params.id
+    var bid = req.params.id;
 
 });
 
 //Edit specific bookmark
 router.put('/:id', function(req,res) {
-    var bid = req.params.id
+    var bid = req.params.id;
     
 });
 

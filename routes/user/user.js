@@ -19,13 +19,13 @@ router.get('/:id', function(req,res) {
 
 //Edit user profile
 router.put('/:id', function(req,res) {
-    var uid = req.params.id
+    var uid = req.params.id;
     
 });
 
 //Delete user
 router.delete('/:id', function(req,res) {
-    var uid = req.params.id
+    var uid = req.params.id;
     
 });
 

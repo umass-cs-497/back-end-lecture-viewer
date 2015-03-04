@@ -8,7 +8,7 @@ router.get('/', function(req,res) {
 
 //Mark notification as read
 router.put('/:id', function(req,res) {
-    var nid = req.params.id
+    var nid = req.params.id;
     
 });
 
