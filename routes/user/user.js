@@ -1,7 +1,6 @@
 var express     = require('express');
 var router      = express.Router();
-
-var uidRegex    = ''; //Create regex that matches all potential user id's
+var uidregex    = require('../../app').uidregex;
 
 //Create an account
 router.post('/', function(req,res) {
@@ -9,19 +8,19 @@ router.post('/', function(req,res) {
 });
 
 //Get user
-router.get('/:id' + uidRegex, function(req,res) {
+router.get('/:id' + uidregex, function(req,res) {
     var uid = req.params.id;
 
 });
 
 //Edit user profile
-router.put('/:id' + uidRegex, function(req,res) {
+router.put('/:id' + uidregex, function(req,res) {
     var uid = req.params.id
     
 });
 
 //Delete user
-router.delete('/:id' + uidRegex, function(req,res) {
+router.delete('/:id' + uidregex, function(req,res) {
     var uid = req.params.id
     
 });
