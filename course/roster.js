@@ -2,9 +2,9 @@ var express     = require('express');
 var router      = express.Router();
 
 //Get the roster of a specific course
-router.get('/:id', function(req,res) {
+router.get('/', function(req,res) {
     var cid = req.params.id;
-
+    console.log(cid + "\n");
 });
 
 //Add a single user to the course's roster

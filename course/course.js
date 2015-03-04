@@ -1,6 +1,8 @@
 var express     = require('express');
 var router      = express.Router();
 
+router.use('/:id/roster', require('./roster'));
+
 //Create a course
 router.post('/', function(req,res) {
 
