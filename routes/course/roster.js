@@ -16,7 +16,7 @@ module.exports = {
         router.delete('/:cid/roster/:uid', function(req,res) {
             var cid = req.params.cid;
             var uid = req.params.uid;
-            
+
         });
     }
 };

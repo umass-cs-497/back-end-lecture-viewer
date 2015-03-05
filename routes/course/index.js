@@ -6,7 +6,7 @@ require('./roster').setup(router);
 
 //Create a course
 router.post('/', function(req,res) {
-    
+
 });
 
 //Get course
@@ -25,7 +25,7 @@ router.put('/:id', function(req,res) {
 //Delete course
 router.delete('/:id', function(req,res) {
     var cid = req.params.id;
-    
+
 });
 
 module.exports = router;
