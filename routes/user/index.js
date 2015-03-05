@@ -1,13 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-//Import modules
-var bookmark = require('./bookmark');
-var notification = require('./notification');
-
 //Add module routes
-bookmark.setup(router);
-notification.setup(router);
+require('./bookmark').setup(router);
+require('./notification').setup(router);
 
 //Create an account
 router.post('/', function(req,res) {
