@@ -1,27 +1,32 @@
-module.exports = {
-    setup: function(app) {
-        //Create a course
-        app.post('/course', function(req,res) {
-            
-        });
+var express = require('express');
+var router = express.Router();
 
-        //Get course
-        app.get('/course/:id', function(req,res) {
-            var cid = req.params.id;
+var roster = require('./roster');
 
-            console.log(cid);
-        });
+roster.setup(router);
 
-        //Edit course
-        app.put('/course/:id', function(req,res) {
-            var cid = req.params.id;
-            
-        });
+//Create a course
+router.post('/', function(req,res) {
+    
+});
 
-        //Delete course
-        app.delete('/course/:id', function(req,res) {
-            var cid = req.params.id;
-            
-        });
-    }
-};
+//Get course
+router.get('/:id', function(req,res) {
+    var cid = req.params.id;
+
+    console.log(cid);
+});
+
+//Edit course
+router.put('/:id', function(req,res) {
+    var cid = req.params.id;
+    
+});
+
+//Delete course
+router.delete('/:id', function(req,res) {
+    var cid = req.params.id;
+    
+});
+
+module.exports = router;

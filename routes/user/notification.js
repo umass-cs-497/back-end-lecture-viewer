@@ -1,12 +1,12 @@
 module.exports = {
-    setup: function(app) {
+    setup: function(router) {
         //Get notifications of current user
-        router.get('/user/notification/', function(req,res) {
+        router.get('/notification/', function(req,res) {
             
         });
 
         //Mark notification as read
-        router.put('/user/notification/:id', function(req,res) {
+        router.put('/notification/:id', function(req,res) {
             var nid = req.params.id;
             
         });
