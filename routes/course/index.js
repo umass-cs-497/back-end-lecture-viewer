@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+//Import modules
 var roster = require('./roster');
 
+//Add module routes
 roster.setup(router);
 
 //Create a course
