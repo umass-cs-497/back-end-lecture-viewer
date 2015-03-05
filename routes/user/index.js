@@ -1,13 +1,5 @@
-var express     = require('express');
-var router      = express.Router();
-
-router.use('/user/bookmark'    , require('./bookmark'));
-router.use('/user/notification', require('./notification'));
-
 module.exports = {
-
     setup: function(app) {
-
         //Create an account
         app.post('/user', function(req,res) {
             
@@ -35,7 +27,6 @@ module.exports = {
             var uid = req.params.id;
             
         });
-
     }
 };
 
