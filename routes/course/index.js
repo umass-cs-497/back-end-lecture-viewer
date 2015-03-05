@@ -3,6 +3,7 @@ var router = express.Router();
 
 //Add module routes
 require('./roster').setup(router);
+require('./lecture').setup(router);
 
 //Create a course
 router.post('/', function(req,res) {
@@ -19,7 +20,7 @@ router.get('/:course_id', function(req,res) {
 //Edit course
 router.put('/:course_id', function(req,res) {
     var course_id = req.params.course_id;
-    
+
 });
 
 //Delete course
