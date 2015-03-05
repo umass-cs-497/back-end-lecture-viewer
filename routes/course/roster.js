@@ -1,3 +1,4 @@
+//Roster API
 module.exports = {
     setup: function(router) {
         //Get the roster of a specific course
