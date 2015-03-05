@@ -1,3 +1,4 @@
+//Bookmark API
 module.exports = {
     setup: function(router) {
         //Create bookmark for current user
@@ -6,28 +7,28 @@ module.exports = {
         });
 
         //Get user's bookmarks for specific course
-        router.get('/bookmark/course/:id', function(req,res) {
-            var cid = req.params.id;
+        router.get('/bookmark/course/:course_id', function(req,res) {
+            var course_id = req.params.course_id;
 
         });
 
         //Get user's bookmarks for specific lecture of a course
-        router.get('/bookmark/:cid/lecture/:lid', function(req,res) {
-            var cid = req.params.cid;
-            var lid = reg.params.lid;
+        router.get('/bookmark/:course_id/lecture/:lecture_id', function(req,res) {
+            var course_id = req.params.course_id;
+            var lecture_id = reg.params.lecture_id;
 
         });
 
         //Delete specific bookmark
-        router.delete('/bookmark/:id', function(req,res) {
-            var bid = req.params.id;
+        router.delete('/bookmark/:bookmark_id', function(req,res) {
+            var bookmark_id = req.params.bookmark_id;
 
         });
 
         //Edit specific bookmark
-        router.put('/bookmark/:id', function(req,res) {
-            var bid = req.params.id;
-            
+        router.put('/bookmark/:bookmark_id', function(req,res) {
+            var bookmark_id = req.params.bookmark_id;
+
         });
     }
 };

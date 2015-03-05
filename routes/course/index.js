@@ -10,21 +10,21 @@ router.post('/', function(req,res) {
 });
 
 //Get course
-router.get('/:id', function(req,res) {
-    var cid = req.params.id;
+router.get('/:course_id', function(req,res) {
+    var course_id = req.params.course_id;
 
-    console.log(cid);
+    console.log(course_id);
 });
 
 //Edit course
-router.put('/:id', function(req,res) {
-    var cid = req.params.id;
+router.put('/:course_id', function(req,res) {
+    var course_id = req.params.course_id;
     
 });
 
 //Delete course
-router.delete('/:id', function(req,res) {
-    var cid = req.params.id;
+router.delete('/:course_id', function(req,res) {
+    var course_id = req.params.course_id;
 
 });
 
