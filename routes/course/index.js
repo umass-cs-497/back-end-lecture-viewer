@@ -4,6 +4,7 @@ var router = express.Router();
 //Add module routes
 require('./roster').setup(router);
 require('./lecture').setup(router);
+require('./attachment').setup(router);
 
 //Create a course
 router.post('/', function(req,res) {
