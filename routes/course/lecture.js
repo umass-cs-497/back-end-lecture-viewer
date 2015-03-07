@@ -11,8 +11,8 @@ module.exports = {
         router.get('/:course_id/lecture/:lecture_id', function(req,res) {
             var course_id = req.params.course_id;
             var lecture_id = req.params.lecture_id;
-            
-            console.log(course_id + " " + lecture_id);
+
+            res.send(course_id + " " + lecture_id);
         });
 
         //Edit a specific lecture
