@@ -21,10 +21,10 @@ var mock_notifications = [
                 "lecture_name" : "Lecture 5: Can we really trust arrays?",
                 "lecture_id" : "8dfaa22e1f3c000000003312",
                 "comment" : "What's an array?",
-                "comment_id" : "8dfaa22eff3c242000003312"
+                "comment_id" : "8dfaa22eff3c242000003312",
                 "reply" : "\*facepalm\* its soo simple dude.",
                 "replier_name" : "That Guy",
-                "replier_id" : "8dfaa22e1f3c242000003312"
+                "replier_id" : "8dfaa22e1f3c242000003312",
                 "date" : "03/02/2015 01:28:22"
             }
         ];
@@ -39,7 +39,7 @@ module.exports = {
                 'data': {
                     'notifications': mock_notifications
                 }
-            }
+            });
         });
 
         //Mark notification as read
