@@ -17,16 +17,24 @@ var mock_profile_picture = 'http://faculty.sites.uci.edu/ltemplate/files/2011/04
 router.post('/', function(req,res) {
     //Check if all required parameters are present
     if(req.body.email && req.body.password && req.body.first_name && req.body.last_name) {
-        res.send({'status': 'success', 'data': {'user_id': mock_uid}});
+        res.status(200).send({'status': 'success', 
+            'data': {
+                'user_id': mock_uid
+            }
+        });
     }
     else {
-        res.send({'status': 'fail', 'data': {'title': 'Incorrect paramaters'}});
+        res.send({'status': 'fail', 
+            'data': {
+                'title': 'Incorrect paramaters'
+            }
+        });
     }
 });
 
 //Get logged in user info
 router.get('/', function(req,res) {
-    res.send({'status': 'success',
+    res.status(200).send({'status': 'success',
         'data': {
             'first_name': mock_fname,
             'last_name': mock_lname,
@@ -38,7 +46,7 @@ router.get('/', function(req,res) {
 //Get user
 router.get('/:user_id', function(req,res) {
     var user_id = req.params.user_id;
-    res.send({'status': 'success',
+    res.status(200).send({'status': 'success',
         'data': {
             'first_name': mock_fname,
             'last_name': mock_lname,
@@ -61,7 +69,7 @@ router.put('/:user_id', function(req,res) {
         //Update user profile pic in db
     }
 
-    res.send({'status': 'success',
+    res.status(200).send({'status': 'success',
         'data': {
             
         }
@@ -74,7 +82,7 @@ router.delete('/:user_id', function(req,res) {
 
     //Delete user in database
 
-    res.send({'status': 'success',
+    res.status(200).send({'status': 'success',
         'data': {
             
         }
