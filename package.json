@@ -12,6 +12,6 @@
     "express": "~4.9.0",
     "mocha": "2.2.1",
     "supertest": "0.15.0",
-    "should": "5.1.0"
+    "body-parser": "1.12.0"
   }
 }
