@@ -6,18 +6,18 @@ require('./bookmark').setup(router);
 require('./notification').setup(router);
 
 /*-----MOCK DATA-------*/
-var uid = '2394798792';
-var fname = 'Jane';
-var lname = 'Doe';
-var course_list = [{'name': 'CS497S Scalable Web Systems', 'id': '2348276591'}];
-var profile_picture = 'http://faculty.sites.uci.edu/ltemplate/files/2011/04/generic_profile.jpg';
+var mock_uid = '2394798792';
+var mock_fname = 'Jane';
+var mock_lname = 'Doe';
+var mock_course_list = [{'name': 'CS497S Scalable Web Systems', 'id': '2348276591'}];
+var mock_profile_picture = 'http://faculty.sites.uci.edu/ltemplate/files/2011/04/generic_profile.jpg';
 /*-----MOCK DATA-------*/
 
 //Create an account
 router.post('/', function(req,res) {
     //Check if all required parameters are present
     if(req.body.email && req.body.password && req.body.first_name && req.body.last_name) {
-        res.send({'status': 'success', 'data': {'user_id': uid}});
+        res.send({'status': 'success', 'data': {'user_id': mock_uid}});
     }
     else {
         res.send({'status': 'fail', 'data': {'title': 'Incorrect paramaters'}});
@@ -28,9 +28,9 @@ router.post('/', function(req,res) {
 router.get('/', function(req,res) {
     res.send({'status': 'success',
         'data': {
-            'first_name': fname,
-            'last_name': lname,
-            'course_list': course_list
+            'first_name': mock_fname,
+            'last_name': mock_lname,
+            'course_list': mock_course_list
         }
     });
 });
@@ -40,9 +40,9 @@ router.get('/:user_id', function(req,res) {
     var user_id = req.params.user_id;
     res.send({'status': 'success',
         'data': {
-            'first_name': fname,
-            'last_name': lname,
-            'profile_picture': profile_picture
+            'first_name': mock_fname,
+            'last_name': mock_lname,
+            'profile_picture': mock_profile_picture
         }
     });
 });
@@ -51,10 +51,10 @@ router.get('/:user_id', function(req,res) {
 router.put('/:user_id', function(req,res) {
     var user_id = req.params.user_id;
 
-    if(req.body.fname) {
+    if(req.body.first_name) {
         //Update user first name in db
     }
-    if(req.body.lname) {
+    if(req.body.last_name) {
         //Update user last name in db
     }
     if(req.body.profile_picture) {
