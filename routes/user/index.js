@@ -45,7 +45,6 @@ router.get('/', function(req,res) {
 
 //Get user
 router.get('/:user_id', function(req,res) {
-    var user_id = req.params.user_id;
     res.status(200).send({'status': 'success',
         'data': {
             'first_name': mock_fname,
@@ -57,7 +56,6 @@ router.get('/:user_id', function(req,res) {
 
 //Edit user profile
 router.put('/:user_id', function(req,res) {
-    var user_id = req.params.user_id;
 
     if(req.body.first_name) {
         //Update user first name in db
@@ -78,7 +76,6 @@ router.put('/:user_id', function(req,res) {
 
 //Delete user
 router.delete('/:user_id', function(req,res) {
-    var user_id = req.params.user_id;
 
     //Delete user in database
 

@@ -44,7 +44,6 @@ module.exports = {
 
         //Mark notification as read
         router.put('/notification/:notification_id', function(req,res) {
-            var notification_id = req.params.notification_id;
 
             //Mark notification as read in database
 
