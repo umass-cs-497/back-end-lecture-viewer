@@ -50,6 +50,14 @@ router.get('/', function(req,res) {
     });
 });
 
+//Delete current user
+router.delete('/', function(req,res) {
+
+    //Delete user in database
+
+    res.send({'status': 'success', 'data': {}});
+});
+
 //Get user
 router.get('/:user_id', function(req,res) {
 
@@ -68,14 +76,6 @@ router.get('/:user_id', function(req,res) {
 router.put('/:user_id', function(req,res) {
 
     //Edit user in database
-
-    res.send({'status': 'success', 'data': {}});
-});
-
-//Delete current user
-router.delete('/', function(req,res) {
-
-    //Delete user in database
 
     res.send({'status': 'success', 'data': {}});
 });
