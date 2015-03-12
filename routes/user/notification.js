@@ -35,7 +35,7 @@ module.exports = {
     setup: function(router) {
         //Get notifications of current user
         router.get('/notification/', function(req,res) {
-            res.status(200).send({'status': 'success',
+            res.send({'status': 'success',
                 'data': {
                     'notifications': mock_notifications
                 }
@@ -47,7 +47,7 @@ module.exports = {
 
             //Mark notification as read in database
 
-            res.status(200).send({'status': 'success', 'data': {}});
+            res.send({'status': 'success', 'data': {}});
         });
     }
 };
