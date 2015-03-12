@@ -4,7 +4,7 @@ var request = require('supertest');
 
 var url = 'http://localhost:3000';
 
-describe('User', function() {
+describe('/user', function() {
 
     //POST /user
     describe('/ [POST]', function() {
@@ -19,7 +19,10 @@ describe('User', function() {
             request(url)
                 .post('/user')
                 .send(body)
-                .expect(200, done);
+                .end(function(err, res) {
+                    res.body.status.should.equal('success');
+                    done();
+                });
         });
         it('Should return failure: incorrect parameters', function(done) {
             request(url)
@@ -38,9 +41,9 @@ describe('User', function() {
         it('Should return an object with user info', function(done) {
             request(url)
                 .get('/user')
-                .expect(200)
                 .end(function(err, res) {
                     if(err) return done(err);
+                    res.body.status.should.equal('success');
                     res.body.data.should.have.properties('first_name', 'last_name', 'course_list');
                     done();
                 });
