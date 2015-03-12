@@ -15,22 +15,12 @@ describe('/user', function() {
                      first_name: 'Tim', 
                      last_name: 'Richards'};
 
-        it('Should return success and user id', function(done) {
+        it('Should successfully create a new user in the database', function(done) {
             request(url)
                 .post('/user')
                 .send(body)
                 .end(function(err, res) {
                     res.body.status.should.equal('success');
-                    done();
-                });
-        });
-        it('Should return failure: incorrect parameters', function(done) {
-            request(url)
-                .post('/user')
-                .send({email: body.email, password: body.password, first_name: body.first_name})
-                .end(function(err, res) {
-                    if(err) return done(err);
-                    res.body.status.should.equal('fail');
                     done();
                 });
         });
