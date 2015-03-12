@@ -22,6 +22,13 @@ router.post('/', function(req,res) {
                 'user_id': mock_uid
             }
         });
+        /*---------------------------------------
+
+
+        Send verification email to req.body.email
+
+
+        ---------------------------------------*/
     }
     else {
         res.send({'status': 'fail',
@@ -45,6 +52,9 @@ router.get('/', function(req,res) {
 
 //Get user
 router.get('/:user_id', function(req,res) {
+
+    //Get user info from database
+
     res.send({'status': 'success',
         'data': {
             'first_name': mock_fname,
@@ -57,21 +67,9 @@ router.get('/:user_id', function(req,res) {
 //Edit user profile
 router.put('/:user_id', function(req,res) {
 
-    if(req.body.first_name) {
-        //Update user first name in db
-    }
-    if(req.body.last_name) {
-        //Update user last name in db
-    }
-    if(req.body.profile_picture) {
-        //Update user profile pic in db
-    }
+    //Edit user in database
 
-    res.send({'status': 'success',
-        'data': {
-
-        }
-    });
+    res.send({'status': 'success', 'data': {}});
 });
 
 //Delete current user
@@ -79,12 +77,7 @@ router.delete('/', function(req,res) {
 
     //Delete user in database
 
-    res.send({'status': 'success',
-        'data': {
-
-        }
-    });
-
+    res.send({'status': 'success', 'data': {}});
 });
 
 //Delete a user
@@ -92,12 +85,7 @@ router.delete('/:user_id', function(req,res) {
 
     //Delete user in database
 
-    res.send({'status': 'success',
-        'data': {
-
-        }
-    });
-
+    res.send({'status': 'success', 'data': {}});
 });
 
 module.exports = router;
