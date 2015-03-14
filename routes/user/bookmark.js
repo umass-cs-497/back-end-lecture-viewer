@@ -1,9 +1,27 @@
 //Bookmark API
 module.exports = {
     setup: function(router) {
+
+        /*-----MOCK DATA-----*/
+        var mock_bid = 456342;
+        /*-----MOCK DATA-----*/
+
         //Create bookmark for current user
         router.post('/bookmark', function(req,res) {
-
+            if(req.body.course_id && req.body.lecture_id && req.body.label && req.body.time) {
+                res.send({'status': 'success',
+                    'data' : {
+                        'bookmark_id': mock_bid
+                    }
+                });
+            }
+            else {
+                res.send({'status': 'fail',
+                    'data': {
+                        'title': 'Incorrect parameters'
+                    }
+                });
+            }
         });
 
         //Get user's bookmarks for specific course
