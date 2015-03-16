@@ -3,61 +3,45 @@ var assert  = require('assert');
 var request = require('supertest');
 
 var url = 'http://localhost:3000';
-var uidreq = 2359;
+var bidreq = 493025;
+var lidreq = 763562;
+var cidreq = 629459;
 
-describe('User', function() {
+describe('Bookmarks', function() {
 
     //Mock Data
-    var body =  {email: 'me@me.me', 
-                 password: 'pw123', 
-                 first_name: 'Tim', 
-                 last_name: 'Richards'};
+    var mock_createbookmark = {
+        'course_id': 'fij98342h2934hrfjsdk',
+        'lecture_id': '89dfa9sd8fq89',
+        'label': 'New Bookmark',
+        'time': '123894532'
+    };
 
-    it('/user [POST]', function(done) {
+    it('/user/bookmark [POST]', function(done) {
         request(url)
-            .post('/user')
-            .send(body)
+            .post('/user/bookmark')
+            .send(mock_createbookmark)
             .end(function(err, res) {
                 res.body.status.should.equal('success');
+                res.body.data.should.have.property('bookmark_id');
                 done();
             });
     });
 
-    it('/user [GET]', function(done) {
+    it('/user/bookmark/:course_id/lecture/:lecture_id [GET]', function(done) {
         request(url)
-            .get('/user')
-            .end(function(err, res) {
-                if(err) return done(err);
-                res.body.status.should.equal('success');
-                res.body.data.should.have.properties('first_name', 'last_name', 'course_list');
-                done();
-            });
-    });
-
-    it('/user [DELETE]', function(done) {
-        request(url)
-            .delete('/user/')
+            .get('/user/bookmark/'+cidreq+'/lecture/'+lidreq)
             .end(function(err, res) {
                 if(err) return done(err);
                 res.body.status.should.equal('success');
+                res.body.data.should.have.property('bookmarks');
                 done();
             });
     });
 
-    it('/:user_id [GET]', function(done) {
+    it('/user/bookmark/:bookmark_id [DELETE]', function(done) {
         request(url)
-            .get('/user/'+uidreq)
-            .end(function(err, res) {
-                if(err) return done(err);
-                res.body.status.should.equal('success');
-                res.body.data.should.have.properties('first_name', 'last_name');
-                done();
-            });
-    });
-
-    it('/:user_id [PUT]', function(done) {
-        request(url)
-            .put('/user/'+uidreq)
+            .delete('/user/bookmark/'+bidreq)
             .end(function(err, res) {
                 if(err) return done(err);
                 res.body.status.should.equal('success');
@@ -65,9 +49,20 @@ describe('User', function() {
             });
     });
 
-    it('/:user_id [DELETE]', function(done) {
+    it('/user/bookmark/course/:course_id [GET]', function(done) {
         request(url)
-            .delete('/user/'+uidreq)
+            .get('/user/bookmark/course/'+cidreq)
+            .end(function(err, res) {
+                if(err) return done(err);
+                res.body.status.should.equal('success');
+                done();
+            });
+    });
+
+    it('/user/bookmark/:bookmark_id [PUT]', function(done) {
+        request(url)
+            .put('/user/bookmark/'+bidreq)
+            .send({'label': 'edited label'})
             .end(function(err, res) {
                 if(err) return done(err);
                 res.body.status.should.equal('success');

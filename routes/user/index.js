@@ -24,9 +24,7 @@ router.post('/', function(req,res) {
         });
         /*---------------------------------------
 
-
         Send verification email to req.body.email
-
 
         ---------------------------------------*/
     }
@@ -55,7 +53,7 @@ router.delete('/', function(req,res) {
 
     //Delete user in database
 
-    res.send({'status': 'success', 'data': {}});
+    res.send({'status': 'success'});
 });
 
 //Get user
@@ -77,7 +75,7 @@ router.put('/:user_id', function(req,res) {
 
     //Edit user in database
 
-    res.send({'status': 'success', 'data': {}});
+    res.send({'status': 'success'});
 });
 
 //Delete a user
@@ -85,7 +83,7 @@ router.delete('/:user_id', function(req,res) {
 
     //Delete user in database
 
-    res.send({'status': 'success', 'data': {}});
+    res.send({'status': 'success'});
 });
 
 module.exports = router;
