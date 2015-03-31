@@ -1,3 +1,8 @@
+var formidable = require('formidable')
+var fs = require('fs');
+var csv = require('csv');
+var validator = require('validator');
+
 //Roster API
 module.exports = {
     setup: function(router) {
@@ -6,9 +11,86 @@ module.exports = {
 
         });
 
-        //Add a single user to the course's roster
+        //Add a single(TODO) or a bunch of users to the course's roster
         router.post('/:course_id/roster', function(req,res) {
 
+            //Creates form that can read in file
+            var form = new formidable.IncomingForm();
+
+            //Starts parsing of the file
+            form.parse(req, function(err, fields, files) {
+
+                //Gets the temp path the file was uploaded to
+                var tempPath = files['upload']['path'];
+
+                console.log("Received upload. Placed in " + tempPath);
+
+                //Starts reading of the uploaded file
+                fs.readFile(tempPath, 'utf8', function (err,data) {
+                    if (err) {
+                        return console.log(err);
+                    }
+
+
+                    //TODO
+                    //Check if we are adding non duplicates or doing a complete overwrite
+
+
+                    //Create arrays for all the valid/invalid emails
+                    var validEmails = [];
+                    var invalidEmails = [];
+
+                    //Create a new csv parser and write the file data into it
+                    var parser = csv.parse();
+                    parser.write(data);
+
+                    //Iterate through each csv entry
+                    while(email = parser.read())
+                    {   
+                        //For some reason the parser returns arrays of 1 item... So this makes it 1 item
+                        email = email[0];
+
+                        //Make sure the entry is actually an email and not just say, a name.
+                        if(validator.isEmail(email))
+                        {
+                            validEmails.push(email)
+                        }
+                        else
+                        {
+                            invalidEmails.push(email);
+                        }
+                    }
+
+                    //TODO: For each vaild email, check against the current roster. Only add if not there.
+                    //Or just add if we are overwriting
+
+                    //For testing only. Just displays what email were valid/invalid
+                    res.write("<h2>Valid Emails</h2><br>");
+                    for(var i =0;i<validEmails.length;i++)
+                    {  
+                        var email = (i+1) + ". " + validEmails[i];
+                        res.write(email + "<br>");
+                    }
+
+                    res.write("<br><br><br><h2>Invalid Emails</h2><br>");
+                    for(var i =0;i<invalidEmails.length;i++)
+                    {  
+                        var nonEmail = (i+1) + ". " + invalidEmails[i];
+                        res.write(nonEmail + "<br>");
+                    }
+
+
+                    res.write("<br><br>");
+
+
+                    //This is more like what would be returned, a JSON object with lists of what was accepted
+
+                    responseObject = {"emails_added" : validEmails, "emails_rejected" : invalidEmails};
+
+                    res.write(JSON.stringify(responseObject));
+                    res.end();
+                });    
+            });
         });
 
         //Delete a user from a course's roster
