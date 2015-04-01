@@ -1,5 +1,5 @@
 var formidable = require('formidable')
-var fs = require('fs.extra');
+var fs = require('fs-extra');
 var uuid = require('node-uuid');
 
 //Attachment API
@@ -8,6 +8,8 @@ module.exports = {
         //Add an attachment to a lecture
         router.post('/:course_id/lecture/:lecture_id/attachment', function(req,res) 
         {
+        	responseObject = {data:{}};
+                    
         	//Creates form that can read in file
             var form = new formidable.IncomingForm();
             //Starts parsing of the file
@@ -24,40 +26,36 @@ module.exports = {
 
 	                console.log("Received upload. Placed in " + tempPath);
 
-	                //This is where we can check the temp file if need be
-	                //Probs not though... We trust profs to not give out viruses...
+					//TODO actually define where it goes.
+					//I assume this will be in the media/course/lecture/attachments folder eventually
+	                var attachmentPath = "media/attachments/";
+	                var newPath = attachmentPath + file['name'];// + uuid.v1() + extention; //Maybe we need to keep the name...
 
-	                /*
-	                //This whole renaming the file is actually pointless...
-	                var extention = "";
-	                //TODO Only problem i can see as of now is if one uploads a file
-	                //w/ no extention and has periods in its name...
-	                if(file['name'].indexOf(".") >= 0)
-	                {
-	                	var splitFileName = file['name'].split(".");
-	                	extention = "." + splitFileName[splitFileName.length-1];
-	                }
-					*/
 
-					//TODO actually define where it goes... YOU ALSO HAVE TO CREATE THE FOLDER FIRST DANGIT...
-	                var newPath = "media/attachments/" + file['name'];// + uuid.v1() + extention; //Maybe we need to keep the name...
+					fs.move(tempPath, newPath, {clobber :true}, function (err) {
+						if (err) 
+						{
+							responseObject.status = "error";
+                    		responseObject.data.message = "Failed to save the file correctly";
+							res.send(responseObject);
 
-	                fs.move(tempPath, newPath, function (err) {
-						if (err) {
-							res.send("Would send 500 error.. Need to make attachments folder in media... Sorry.");
-							throw err;
+							console.log(err);
+
+							return;
 						}
 
-						//Database saving goes here
+						//TODO Database saving goes here
 
-					  	console.log("File saved in " + newPath);
-	                	res.send("Attachment Received");
+						console.log("File saved in " + newPath);
+
+						responseObject.status = "success";
+                    	responseObject.data.file = newPath;
+
+						res.send(responseObject);
 					});
-
+	           
 	            }else{
 	            	console.log("File is missing");
-
-                    responseObject = {data:{}};
                     
                     responseObject.status = "fail";
                     responseObject.data.message = "No file was provided when uploading";
