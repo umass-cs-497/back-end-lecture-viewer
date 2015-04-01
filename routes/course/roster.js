@@ -25,75 +25,89 @@ module.exports = {
 
                     //Gets the temp path the file was uploaded to
                     //TODO check against this.. files['upload'] could be undefined
-                    var tempPath = files['upload']['path'];
 
-                    console.log("Received upload. Placed in " + tempPath);
+                    if(files['upload'] != undefined)
+                    {
+                        var file = files['upload'];
+                        var tempPath = file['path'];
 
-                    //Starts reading of the uploaded file
-                    fs.readFile(tempPath, 'utf8', function (err,data) {
-                        if (err) {
-                            return console.log(err);
-                        }
+                        console.log("Received upload. Placed in " + tempPath);
 
-
-                        //TODO
-                        //Check if we are adding non duplicates or doing a complete overwrite
-
-
-                        //Create arrays for all the valid/invalid emails
-                        var validEmails = [];
-                        var invalidEmails = [];
-
-                        //Create a new csv parser and write the file data into it
-                        var parser = csv.parse();
-                        parser.write(data);
-
-                        //Iterate through each csv entry
-                        while(email = parser.read())
-                        {   
-                            //For some reason the parser returns arrays of 1 item... So this makes it 1 item
-                            email = email[0];
-
-                            //Make sure the entry is actually an email and not just say, a name.
-                            if(validator.isEmail(email))
-                            {
-                                validEmails.push(email)
+                        //Starts reading of the uploaded file
+                        fs.readFile(tempPath, 'utf8', function (err,data) {
+                            if (err) {
+                                return console.log(err);
                             }
-                            else
-                            {
-                                invalidEmails.push(email);
+
+
+                            //TODO
+                            //Check if we are adding non duplicates or doing a complete overwrite
+
+
+                            //Create arrays for all the valid/invalid emails
+                            var validEmails = [];
+                            var invalidEmails = [];
+
+                            //Create a new csv parser and write the file data into it
+                            var parser = csv.parse();
+                            parser.write(data);
+
+                            //Iterate through each csv entry
+                            while(email = parser.read())
+                            {   
+                                //For some reason the parser returns arrays of 1 item... So this makes it 1 item
+                                email = email[0];
+
+                                //Make sure the entry is actually an email and not just say, a name.
+                                if(validator.isEmail(email))
+                                {
+                                    validEmails.push(email)
+                                }
+                                else
+                                {
+                                    invalidEmails.push(email);
+                                }
                             }
-                        }
 
-                        //TODO: For each vaild email, check against the current roster. Only add if not there.
-                        //Or just add if we are overwriting
+                            //TODO: For each vaild email, check against the current roster. Only add if not there.
+                            //Or just add if we are overwriting
 
-                        //For testing only. Just displays what email were valid/invalid
-                        res.write("<h2>Valid Emails</h2><br>");
-                        for(var i =0;i<validEmails.length;i++)
-                        {  
-                            var email = (i+1) + ". " + validEmails[i];
-                            res.write(email + "<br>");
-                        }
+                            //For testing only. Just displays what email were valid/invalid
+                            res.write("<h2>Valid Emails</h2><br>");
+                            for(var i =0;i<validEmails.length;i++)
+                            {  
+                                var email = (i+1) + ". " + validEmails[i];
+                                res.write(email + "<br>");
+                            }
 
-                        res.write("<br><br><br><h2>Invalid Emails</h2><br>");
-                        for(var i =0;i<invalidEmails.length;i++)
-                        {  
-                            var nonEmail = (i+1) + ". " + invalidEmails[i];
-                            res.write(nonEmail + "<br>");
-                        }
-
-
-                        res.write("<br><br>");
+                            res.write("<br><br><br><h2>Invalid Emails</h2><br>");
+                            for(var i =0;i<invalidEmails.length;i++)
+                            {  
+                                var nonEmail = (i+1) + ". " + invalidEmails[i];
+                                res.write(nonEmail + "<br>");
+                            }
 
 
-                        //This is more like what would be returned, a JSON object with lists of what was accepted
+                            res.write("<br><br>");
 
-                        responseObject = {"emails_added" : validEmails, "emails_rejected" : invalidEmails};
 
-                        res.write(JSON.stringify(responseObject));
-                        res.end();
-                    });    
+                            //This is more like what would be returned, a JSON object with lists of what was accepted
+
+                            responseObject = {"emails_added" : validEmails, "emails_rejected" : invalidEmails};
+
+                            res.write(JSON.stringify(responseObject));
+                            res.end();
+                        });    
+                    }else{
+                        console.log("File is missing");
+
+                        responseObject = {data:{}};
+                        
+                        responseObject.status = "fail";
+                        responseObject.data.message = "No file was provided when uploading";
+
+                        res.send(responseObject);
+                    }
                 });
             //We were given a json object of a single user
             }else{
