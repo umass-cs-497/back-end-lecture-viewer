@@ -171,7 +171,7 @@ a.list-group-item.heading:hover {
 <pre><code class="language-javascript">    
 {
     status : <span class="hljs-string">"fail"</span>,
-    data : { <span class="hljs-string">"title"</span> : <span class="hljs-string">"A title is required"</span> }
+    data : { <span class="hljs-string">"message"</span> : <span class="hljs-string">"A title is required"</span> }
 }
 
 </code></pre>
@@ -180,13 +180,12 @@ a.list-group-item.heading:hover {
 <pre><code class="language-javascript">    
 {
     status : <span class="hljs-string">"error"</span>,
-    message : <span class="hljs-string">"There was a database connection error"</span>
+    data : { <span class="hljs-string">"message"</span> : <span class="hljs-string">"There was a database connection error"</span> }
 }
 
 </code></pre>
 <h2>Current Points of Confusion</h2>
 <hr>
-<p>Still don’t know how to do the lecture uploading</p>
 </div><a href="#page:users" class="btn btn-default pull-right">Next&nbsp;<i class="fa fa-arrow-circle-right"></i></a><div class="clearfix"></div><hr></div><div data-bind="visible: page() == 'users', style: {marginTop: page() == 'users' ? '38px' : ''}"><div class="panel panel-default"><div class="panel-heading"><h3 id="users">Users&nbsp;<a href="#page:users"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="users-user-generic">User Generic&nbsp;<a href="#page:users,header:users-user-generic"><i class="fa fa-link"></i></a></h4><section id="users-user-generic-post" class="panel panel-success"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Create User</span></div><div style="float:left"><a href="#page:users,header:users-user-generic-post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/user</code></div></div><div class="panel-body"><p>Creates a new user</p>
 </div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#2eee507e9f7e1d203d8b527b0deb5b39" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="2eee507e9f7e1d203d8b527b0deb5b39" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
     "<span class="hljs-attribute">email</span>" : <span class="hljs-value"><span class="hljs-string">"jdoe@umass.edu"</span></span>,
@@ -547,17 +546,11 @@ a.list-group-item.heading:hover {
 }</span>
 </code></pre></li></ul></section><section id="roster-roster-generic-post" class="panel panel-success"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Add Users To Roster</span></div><div style="float:left"><a href="#page:roster,header:roster-roster-generic-post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/course/{course_id}/roster/</code></div></div><div class="panel-body"><p>Adds a <em>group</em> of users by a file of <em>emails</em> to the roster of the specified course</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>course_id</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the course</p>
-</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#342c2c997b4b9c938cce596cf3cf5a53" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="342c2c997b4b9c938cce596cf3cf5a53" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">multipart/form-data; boundary=---BOUNDARY</span><br></code></pre><h5>Body</h5><pre><code>-----BOUNDARY
-Content-<span class="hljs-string">Disposition:</span> form-data; name=<span class="hljs-string">"text[file]"</span>; filename=<span class="hljs-string">"users.csv"</span>
-Content-<span class="hljs-string">Type:</span> text/csv
-Content-Transfer-<span class="hljs-string">Encoding:</span> base64
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#786e73470a09177cd9c4a4671a2dfe31" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="786e73470a09177cd9c4a4671a2dfe31" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">multipart/form-data; boundary=---BOUNDARY</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-comment">-----BOUNDARY</span>
+    Content-Disposition: form-data; <span class="hljs-property">name</span>=<span class="hljs-string">"upload"</span>; filename=<span class="hljs-string">"roster.csv"</span>
+    Content-Type: <span class="hljs-type">text</span>/plain
 
-<span class="hljs-regexp">/9j/</span><span class="hljs-number">4</span>AAQSkZJRgABAQEAYABgAAD/<span class="hljs-number">2</span>wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
-HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/<span class="hljs-number">2</span>wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
-MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
-AhEBAxEB<span class="hljs-regexp">/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/</span>xAAUEAEAAAAAAAAAAAAAAAAAAAAA/<span class="hljs-number">8</span>QAFAEB
-AAAAAAAAAAAAAAAAAAAAAP<span class="hljs-regexp">/EABQRAQAAAAAAAAAAAAAAAAAAAAD/</span><span class="hljs-number">2</span>gAMAwEAAhEDEQA<span class="hljs-regexp">/AL+AD/</span>/Z
------BOUNDARY
+<span class="hljs-comment">-----BOUNDARY</span>
 </code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#47fb8770c9a34d831e3ed5ae78338515" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="47fb8770c9a34d831e3ed5ae78338515" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-collection">{
     <span class="hljs-string">"status"</span> : <span class="hljs-string">"success"</span>,
     <span class="hljs-string">"data"</span> :<span class="hljs-collection">{
@@ -599,7 +592,16 @@ AAAAAAAAAAAAAAAAAAAAAP<span class="hljs-regexp">/EABQRAQAAAAAAAAAAAAAAAAAAAAD/</
 </span>}
 </code></pre></li></ul></section><section id="lectures-lecture-generic-post" class="panel panel-success"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">TODO Add Lecture Auto</span></div><div style="float:left"><a href="#page:lectures,header:lectures-lecture-generic-post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/course/{course_id}/lecture</code></div></div><div class="panel-body"><p>Allows a lecture to be added automatically via the lecture capturing system</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>course_id</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the course</p>
-</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#0b62323a913b9c9cd035ff9027aa3022" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="0b62323a913b9c9cd035ff9027aa3022" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#d8b06b98a0c67127369f2a958d31ffb4" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d8b06b98a0c67127369f2a958d31ffb4" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">multipart/form-data; boundary=---BOUNDARY</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-comment">-----BOUNDARY</span>
+Content-Disposition: form-data; <span class="hljs-property">name</span>=<span class="hljs-string">"upload"</span>; filename=<span class="hljs-string">"zippedFolder.zip"</span>
+Content-Type: <span class="hljs-type">application</span>/x-zip-compressed
+
+<span class="hljs-comment">----WebKitFormBoundary7MA4YWxkTrZu0gW</span>
+Content-Disposition: form-data; <span class="hljs-property">name</span>=<span class="hljs-string">"date"</span>
+
+<span class="hljs-number">1</span>/<span class="hljs-number">2</span>/<span class="hljs-number">3</span> <span class="hljs-number">1</span>:<span class="hljs-number">22</span>:<span class="hljs-number">11</span>
+<span class="hljs-comment">-----BOUNDARY</span>
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#0b62323a913b9c9cd035ff9027aa3022" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="0b62323a913b9c9cd035ff9027aa3022" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
     "<span class="hljs-attribute">status</span>" : <span class="hljs-value"><span class="hljs-string">"success"</span></span>,
     "<span class="hljs-attribute">data</span>" : <span class="hljs-value">{
         "<span class="hljs-attribute">lecture_id</span>" : <span class="hljs-value"><span class="hljs-string">"ff2653ca16000ff32cd"</span>
@@ -651,35 +653,29 @@ AAAAAAAAAAAAAAAAAAAAAP<span class="hljs-regexp">/EABQRAQAAAAAAAAAAAAAAAAAAAAD/</
         "<span class="hljs-attribute">lecture_id</span>" : <span class="hljs-value"><span class="hljs-string">"abbf3141000023"</span>
     </span>}
 </span>}
-</code></pre></li></ul></section></div></div><a href="#page:attachments" class="btn btn-default pull-right">Next&nbsp;<i class="fa fa-arrow-circle-right"></i></a><a href="#page:roster" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Previous</a><div class="clearfix"></div><hr></div><div data-bind="visible: page() == 'attachments', style: {marginTop: page() == 'attachments' ? '38px' : ''}"><div class="panel panel-default"><div class="panel-heading"><h3 id="attachments">Attachments&nbsp;<a href="#page:attachments"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="attachments-attachment-generic">Attachment Generic&nbsp;<a href="#page:attachments,header:attachments-attachment-generic"><i class="fa fa-link"></i></a></h4><section id="attachments-attachment-generic-post" class="panel panel-success"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Add Attachment</span></div><div style="float:left"><a href="#page:attachments,header:attachments-attachment-generic-post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/course/{course_id}/lecture/{lecture_id}/</code></div></div><div class="panel-body"><p>Adds an attachment to a lecture</p>
+</code></pre></li></ul></section></div></div><a href="#page:attachments" class="btn btn-default pull-right">Next&nbsp;<i class="fa fa-arrow-circle-right"></i></a><a href="#page:roster" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Previous</a><div class="clearfix"></div><hr></div><div data-bind="visible: page() == 'attachments', style: {marginTop: page() == 'attachments' ? '38px' : ''}"><div class="panel panel-default"><div class="panel-heading"><h3 id="attachments">Attachments&nbsp;<a href="#page:attachments"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="attachments-attachment-generic">Attachment Generic&nbsp;<a href="#page:attachments,header:attachments-attachment-generic"><i class="fa fa-link"></i></a></h4><section id="attachments-attachment-generic-post" class="panel panel-success"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Add Attachment</span></div><div style="float:left"><a href="#page:attachments,header:attachments-attachment-generic-post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/course/{course_id}/lecture/{lecture_id}/attachment</code></div></div><div class="panel-body"><p>Adds an attachment to a lecture</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>course_id</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the course</p>
 </dd><dt>lecture_id</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the lecture</p>
-</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#222eedf3fcc39fd97c15ad362fb72b2a" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="222eedf3fcc39fd97c15ad362fb72b2a" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">multipart/form-data; boundary=---BOUNDARY</span><br></code></pre><h5>Body</h5><pre><code>-----BOUNDARY
-Content-<span class="hljs-string">Disposition:</span> form-data; name=<span class="hljs-string">"jpg[file]"</span>; filename=<span class="hljs-string">"importantFile.jpg"</span>
-Content-<span class="hljs-string">Type:</span> image/jpeg
-Content-Transfer-<span class="hljs-string">Encoding:</span> base64
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#8e56ba6f3a12e5301cf9ab193f70733e" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="8e56ba6f3a12e5301cf9ab193f70733e" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">multipart/form-data; boundary=---BOUNDARY</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-comment">-----BOUNDARY</span>
+Content-Disposition: form-data; <span class="hljs-property">name</span>=<span class="hljs-string">"upload"</span>; filename=<span class="hljs-string">"program1.js"</span>
+Content-Type: <span class="hljs-type">text</span>/plain
 
-<span class="hljs-regexp">/9j/</span><span class="hljs-number">4</span>AAQSkZJRgABAQEAYABgAAD/<span class="hljs-number">2</span>wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
-HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/<span class="hljs-number">2</span>wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
-MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
-AhEBAxEB<span class="hljs-regexp">/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/</span>xAAUEAEAAAAAAAAAAAAAAAAAAAAA/<span class="hljs-number">8</span>QAFAEB
-AAAAAAAAAAAAAAAAAAAAAP<span class="hljs-regexp">/EABQRAQAAAAAAAAAAAAAAAAAAAAD/</span><span class="hljs-number">2</span>gAMAwEAAhEDEQA<span class="hljs-regexp">/AL+AD/</span>/Z
------BOUNDARY
+<span class="hljs-comment">----WebKitFormBoundary7MA4YWxkTrZu0gW</span>
+Content-Disposition: form-data; <span class="hljs-property">name</span>=<span class="hljs-string">"name"</span>
 
-{
-    <span class="hljs-string">"attachment_name"</span> : <span class="hljs-string">"Special Instructions"</span>
-}
-</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#3dcde4dc6386fd103fc1c060403752b5" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="3dcde4dc6386fd103fc1c060403752b5" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
+Program <span class="hljs-number">1</span>
+<span class="hljs-comment">-----BOUNDARY</span>
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#d2a35e1f0c3a30c35beed1e227bb86bd" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d2a35e1f0c3a30c35beed1e227bb86bd" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
     "<span class="hljs-attribute">status</span>" : <span class="hljs-value"><span class="hljs-string">"success"</span></span>,
     "<span class="hljs-attribute">data</span>" : <span class="hljs-value">{
         "<span class="hljs-attribute">attachment_id</span>" : <span class="hljs-value"><span class="hljs-string">"4972ddffcca200001234"</span></span>,
-        "<span class="hljs-attribute">attachment_url</span>" : <span class="hljs-value"><span class="hljs-string">"4972ddffcca200001234.jpg"</span></span>,
-        "<span class="hljs-attribute">attachment_name</span>" : <span class="hljs-value"><span class="hljs-string">"Special Instructions"</span>
+        "<span class="hljs-attribute">attachment_url</span>" : <span class="hljs-value"><span class="hljs-string">"program1.js"</span></span>,
+        "<span class="hljs-attribute">attachment_name</span>" : <span class="hljs-value"><span class="hljs-string">"Program 1"</span>
         <span class="hljs-string">"course_id"</span> : <span class="hljs-string">"144ffa1230001212"</span></span>,
         "<span class="hljs-attribute">lecture_id</span>" : <span class="hljs-value"><span class="hljs-string">"12ff51216aac0001"</span>
     </span>}
 </span>}
-</code></pre></li></ul></section><h4 id="attachments-attachment-specific">Attachment Specific&nbsp;<a href="#page:attachments,header:attachments-attachment-specific"><i class="fa fa-link"></i></a></h4><section id="attachments-attachment-specific-delete" class="panel panel-danger"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Delete Attachment</span></div><div style="float:left"><a href="#page:attachments,header:attachments-attachment-specific-delete" class="btn btn-xs btn-danger">DELETE</a></div><div style="overflow:hidden"><code>/course/{course_id}/lecture/{lecture_id}/{attachment_id}</code></div></div><div class="panel-body"><p>Deletes an attachment from a lecture</p>
+</code></pre></li></ul></section><h4 id="attachments-attachment-specific">Attachment Specific&nbsp;<a href="#page:attachments,header:attachments-attachment-specific"><i class="fa fa-link"></i></a></h4><section id="attachments-attachment-specific-delete" class="panel panel-danger"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Delete Attachment</span></div><div style="float:left"><a href="#page:attachments,header:attachments-attachment-specific-delete" class="btn btn-xs btn-danger">DELETE</a></div><div style="overflow:hidden"><code>/course/{course_id}/lecture/{lecture_id}/attachment/{attachment_id}</code></div></div><div class="panel-body"><p>Deletes an attachment from a lecture</p>
 </div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>course_id</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the course</p>
 </dd><dt>lecture_id</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the lecture</p>
 </dd><dt>attachment_id</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>ID of the attachment</p>
@@ -798,7 +794,7 @@ AAAAAAAAAAAAAAAAAAAAAP<span class="hljs-regexp">/EABQRAQAAAAAAAAAAAAAAAAAAAAD/</
         "<span class="hljs-attribute">time</span>" : <span class="hljs-value"><span class="hljs-string">"1234"</span>
     </span>}
 </span>}
-</code></pre></li></ul></section></div></div><a href="#page:attachments" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Previous</a><div class="clearfix"></div><hr></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 24 Mar 2015</p><div id="localFile" style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;">This page may not display correctly when opened as a local file. Instead, view it from a web server.
+</code></pre></li></ul></section></div></div><a href="#page:attachments" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Previous</a><div class="clearfix"></div><hr></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 01 Apr 2015</p><div id="localFile" style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;">This page may not display correctly when opened as a local file. Instead, view it from a web server.
 
 </div></body><script src="//code.jquery.com/jquery-1.11.0.min.js"></script><script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script>(function() {
   if (location.protocol === 'file:') {
