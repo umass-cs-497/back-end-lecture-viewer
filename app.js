@@ -3,6 +3,11 @@ var devlog     = require('morgan');
 var bodyParser = require('body-parser');
 var app        = express();
 var port       = process.env.PORT || 3000;
+var connectTimeout = require('connect-timeout');
+
+var timeout = connectTimeout({ time: 1000 });
+
+app.use(timeout); // you can set a global timeout value
 
 //Tell node to interpret post data as JSON
 app.use(bodyParser.json());

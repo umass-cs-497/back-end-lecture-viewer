@@ -2,6 +2,7 @@ var formidable = require('formidable')
 var fs = require('fs');
 var unzip = require('unzip');
 var uuid = require('node-uuid');
+var DecompressZip = require('decompress-zip');
 
 //Lecture API
 module.exports = {
@@ -40,15 +41,18 @@ module.exports = {
                     var unzipPath = "media/" + uuid.v1() + "/";
 
                     //Extracts files from temp zip file
-                    fs.createReadStream(tempPath).pipe(unzip.Extract({ path: unzipPath }))
-                    .on('error', function (error) {
+                    //fs.createReadStream(tempPath).pipe(unzip.Extract({ path: unzipPath }))
+                    var unzipper = new DecompressZip(tempPath);
+                    
+                    unzipper.on('error', function (error) {
                         /*On unzipping error, abort request. Doesn't work for all file types, such as .txt*/
                         console.log("File uploaded was not a .zip file. Aborting upload.");
                         console.log(error);
                         res.send("Invalid File Type");
                         return;
-                    })
-                    .on('finish', function(end)
+                    });
+
+                    unzipper.on('extract', function(end)
                     {   
                         /*Once completing the unzipping, read other params and respond*/
 
@@ -66,11 +70,22 @@ module.exports = {
 
                         res.end();
                     });
+
+                    unzipper.on('progress', function (fileIndex, fileCount) {
+                        console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+                    });
+
+                    unzipper.extract({
+                        path: unzipPath,
+                        filter: function (file) {
+                            return file.type !== "SymbolicLink";
+                        }
+                    });
                 }else{
                     console.log("File is missing");
 
                     responseObject = {data:{}};
-                    
+
                     responseObject.status = "fail";
                     responseObject.data.message = "No file was provided when uploading";
 

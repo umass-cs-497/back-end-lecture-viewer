@@ -2,13 +2,17 @@ var formidable = require('formidable')
 var fs = require('fs');
 var csv = require('csv');
 var validator = require('validator');
+var sleep = require('sleep');
 
 //Roster API
 module.exports = {
     setup: function(router) {
         //Get the roster of a specific course
         router.get('/:course_id/roster', function(req,res) {
-
+                
+            //Testing timeout...
+            sleep.sleep(12);
+            res.send("meep");
         });
 
         //Add a single or a bunch of users to the course's roster
