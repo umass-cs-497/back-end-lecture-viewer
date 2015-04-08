@@ -1,0 +1,9 @@
+{
+  "name": "test",
+  "version": "0.0.1",
+  "dependencies": {
+    "chai": "^2.1.2",
+    "mocha": "^2.2.1",
+    "mocha-mongoose": "^1.0.4"
+  }
+}
