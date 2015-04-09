@@ -1,4 +1,4 @@
-var db_api = require('../database');
+var db_api = require('../../database');
 var should = require('chai').should();
 var assert = require('assert');
 
