@@ -1,8 +1,14 @@
+/**
+* Created by Albert 4/9/15
+*/
+
+var User = require('../models/user');
+
 /*
   Method to add a notification to the user account with given email.
  */
-userSchema.statics.addNotificationById = function(id, newNotification, callback) {
-  this.findByIdAndUpdate(
+exports.addNotificationById = function(id, newNotification, callback) {
+  User.findByIdAndUpdate(
       id,
       {$push: {notifications: newNotification}},
       callback
@@ -12,8 +18,8 @@ userSchema.statics.addNotificationById = function(id, newNotification, callback)
 /*
   Method to get user's notifications by user's email.
  */
-userSchema.statics.getAllNotificationsById = function(id, callback) {
-  this.findById(id, function(err, user) {
+exports.getAllNotificationsById = function(id, callback) {
+  User.findById(id, function(err, user) {
     if (err) {
       callback(err);
     }

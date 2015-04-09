@@ -1,3 +1,9 @@
+/**
+* Created by Albert 4/9/15
+*/
+
+var User = require('../models/user');
+
 /*
   Method to add a bookmark to the user account with given email.
  */
@@ -12,8 +18,8 @@ exports.addBookmarkById = function(id, newBookmark, callback) {
 /*
   Method to get a user's bookmarks by user's email.
  */
-userSchema.statics.getBookmarksById = function(id, callback) {
-  this.findOne({_id: id}, function(err, user) {
+exports.getBookmarksById = function(id, callback) {
+  User.findOne({_id: id}, function(err, user) {
     if (err) {
       callback(err);
     }
