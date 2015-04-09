@@ -2,31 +2,6 @@
  * Created by freddy on 3/19/15.
  */
 
-// var mongoose = require('mongoose');
-// var Schema = mongoose.Schema;
-
-// Schema definition for users
-// var userSchema = new Schema({
-//   email: {type: String, unique: true, lowercase: true},
-//   password: String,
-//   username: String,
-//   name: {
-//     first: String,
-//     last: String
-//   },
-//   role: String,
-//   // list of references to registered courses, element should be ObjectIds in Course collection.
-//   courses: [{
-//     type: Schema.Types.ObjectId,
-//     ref: 'Course'
-//   }],
-//   notifications: [],
-//   bookmarks: [{
-//     title: String,
-//     url: String
-//   }]
-// });
-
 var User = require('../models/user');
 exports.notification = require('./notifications');
 exports.bookmark = require('./bookmarks');
@@ -179,8 +154,3 @@ exports.setUsernameById = function(id, newUsername, callback) {
       callback
   );
 };
-
-// var User = mongoose.model('User', userSchema);
-
-// exports.User = User;
-

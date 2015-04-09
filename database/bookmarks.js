@@ -1,7 +1,3 @@
-/**
-* Created by Albert 4/9/15
-*/
-
 var User = require('../models/user');
 
 /*

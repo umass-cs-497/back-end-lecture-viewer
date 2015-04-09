@@ -1,4 +1,4 @@
-var db_api = require('../index.js');
+var db_api = require('../database');
 var should = require('chai').should();
 var assert = require('assert');
 
@@ -9,8 +9,9 @@ describe('Testing Courses collection:', function() {
 	 var testCourse = null;
 	 var testUser   = null;
 	 before(function(done){
-	 	db_api.courses.dropCoursesDatabase(function(){
-	 		db_api.courses.createCourse('Fall','Sociology','SOC101', function(err,course) {
+	 	// mongoose.connect('mongodb://freddy:freddy@ds043170.mongolab.com:43170/learn_u');
+	 	db_api.course.dropCoursesDatabase(function(){
+	 		db_api.course.createCourse('Fall','Sociology','SOC101', function(err,course) {
 	 		  testCourse = course;
 	 		  assert.equal(err,null);
 	 		  assert.notEqual(testCourse, null);
@@ -23,8 +24,8 @@ describe('Testing Courses collection:', function() {
 	 });
 	 //required for a test user.
 	 before(function(done){
-	 	db_api.users.dropUserDatabase(function(){
-		 	db_api.users.createUser('test20@test.com', 'password', 'username', 'role', function(err,usr){
+	 	db_api.user.dropUserDatabase(function(){
+		 	db_api.user.createUser('test20@test.com', 'password', 'username', 'role', function(err,usr){
 		 		testUser = usr;
 		        assert.equal(err, null);
 		        assert.notEqual(testUser, null);
@@ -42,7 +43,7 @@ describe('Testing Courses collection:', function() {
 	  * Post-condition
 	  */
 	  after(function(done){
-	  	db_api.courses.deleteCourseById(testCourse._id,function(err,count){
+	  	db_api.course.deleteCourseById(testCourse._id,function(err,count){
 		   	 		assert.equal(err,null);
 		   	 		assert.notEqual(count,null);
 		   	 		count._id.should.eql(testCourse._id);
@@ -55,7 +56,7 @@ describe('Testing Courses collection:', function() {
 	   */
 	   var newCourse = null;//for deletion.
 	   it('creates a new course: semester, department ourseNumber',function(done){
-		    db_api.courses.createCourse('Spring','Psychology','PS101',function(err,course){
+		    db_api.course.createCourse('Spring','Psychology','PS101',function(err,course){
 	 		  newCourse = course;
 	 		  assert.equal(err,null);
 	 		  assert.notEqual(course, null);
@@ -70,7 +71,7 @@ describe('Testing Courses collection:', function() {
 	    * Tests that getCourseById returns the right course.
 	    */
 	    it('retrieves a course by ID: CourseID', function(done){
-	    	db_api.courses.getCourseById(testCourse._id, function(err, course){
+	    	db_api.course.getCourseById(testCourse._id, function(err, course){
 	    		assert.equal(err,null);
 	    		assert.notEqual(course, null);
 	    		assert.equal(course.courseNumber,testCourse.courseNumber);
@@ -85,7 +86,7 @@ describe('Testing Courses collection:', function() {
 	     */
 	     var Emails = ["test@test.com","test2@test.com","test3@test.com"];
 	     it('add list of emails to a course by ID: courseID, listofemails', function(done){
-	     	db_api.courses.addListOfEmailsById(testCourse._id,Emails,function(err,course){
+	     	db_api.course.addListOfEmailsById(testCourse._id,Emails,function(err,course){
 	     		assert.equal(err,null);
 	     		assert.notEqual(course,null);
 	     		course.emails[0].should.eql("test@test.com");
@@ -99,7 +100,7 @@ describe('Testing Courses collection:', function() {
 	      * Tests that the course retreived by course id is correct.
 	      */
 	      it('retrieves course by Id: courseID',function(done){
-	      	db_api.courses.getCourseById(testCourse._id, function(err,course){
+	      	db_api.course.getCourseById(testCourse._id, function(err,course){
 	      		assert.equal(err, null);
 	      		assert.notEqual(course,null);
 	      		assert.equal(course.courseNumber, 'SOC101');
@@ -114,7 +115,7 @@ describe('Testing Courses collection:', function() {
 		   * Test that the the functions adds a list of users properly.
 		   */
 		   it('adds list of users by Id: courseID', function(done){
-		   	db_api.courses.addListOfUsersById(testCourse._id, [testUser], function(err, course){
+		   	db_api.course.addListOfUsersById(testCourse._id, [testUser], function(err, course){
 		   		assert.equal(err, null);
 		   		assert.notEqual(course, null);
 		   		assert.equal(course.registeredUsers[0], testUser._id);
@@ -126,7 +127,7 @@ describe('Testing Courses collection:', function() {
 		   * Test that the function gets user properly.
 		   */
 		   it('gets registered users by course id: courseID', function(done){
-		   	db_api.courses.getRegisteredUsersById(testCourse._id, function(err, course){
+		   	db_api.course.getRegisteredUsersById(testCourse._id, function(err, course){
 		   		assert.equal(err, null);
 		   		assert.notEqual(course, null);
 		   		course[0]._id.should.eql(testUser._id);
@@ -145,7 +146,7 @@ describe('Testing Courses collection:', function() {
 		   * Tests that the users emails returned are correct.
 		   */
 		   it('retrieves user emails by courseID: courseID',function(done){
-		   	db_api.courses.getEligibleEmailsById(testCourse._id,function(err,user){
+		   	db_api.course.getEligibleEmailsById(testCourse._id,function(err,user){
 		   		assert.equal(err, null);
 		   		assert.notEqual(user, null);
 		   		user[0].should.eql("test@test.com");
@@ -160,7 +161,7 @@ describe('Testing Courses collection:', function() {
 		    */
 
 		   it('deletes all emails of a course: courseID', function(done){
-		   	db_api.courses.deleteAllEmailsById(testCourse._id, function(err,course){
+		   	db_api.course.deleteAllEmailsById(testCourse._id, function(err,course){
 		   		assert.equal(err, null);
 		   		assert.notEqual(course, null);
 		   		course.emails.length.should.eql(0);//empty array
@@ -173,7 +174,7 @@ describe('Testing Courses collection:', function() {
 			 * Tests that all the lectures are deleted properly.
 			 */
 			 it('deletes all lectures by id: courseID', function(done){
-			 	db_api.courses.deleteAllLecturesById(testCourse._id, function(err, course){
+			 	db_api.course.deleteAllLecturesById(testCourse._id, function(err, course){
 			 		assert.equal(err, null);
 			 		assert.notEqual(course, null);
 			 		course.lectures.length.should.eql(0);
@@ -185,7 +186,7 @@ describe('Testing Courses collection:', function() {
 			  * Test that all the users of a course a deleted properly.
 			  */
 			 it('deletes all the users by id: courseID', function(done){
-			 	db_api.courses.deleteAllUsersById(testCourse._id, function(err, course){
+			 	db_api.course.deleteAllUsersById(testCourse._id, function(err, course){
 			 		assert.equal(err, null);
 			 		assert.notEqual(course, null);
 			 		course.registeredUsers.length.should.eql(0);
@@ -197,15 +198,12 @@ describe('Testing Courses collection:', function() {
 		   	 * Test that deleteCourseById deletes the course properly.
 		   	 */
 		   	 it('deletes a course by ID: courseID',function(done){
-		   	 	db_api.courses.deleteCourseById(newCourse._id,function(err,count){
+		   	 	db_api.course.deleteCourseById(newCourse._id, function(err,count){
 		   	 		assert.equal(err,null);
 		   	 		assert.notEqual(count,null);
 		   	 		count._id.should.eql(newCourse._id);
 		   	 		done();
 		   	 	});
 		   	 });
-
-
-		  
 });
 

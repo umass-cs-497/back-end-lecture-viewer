@@ -1,4 +1,4 @@
-var db_api = require('../index.js');
+var db_api = require('../database');
 var should = require('chai').should();
 var assert = require('assert');
 
@@ -9,8 +9,8 @@ describe('Testing User collection:', function(){
   var testUser = null;
 
   before(function(done){
-    db_api.users.dropUserDatabase(function() {
-      db_api.users.createUser('test@test.com', 'password', 'username', 'role', function (err, doc) {
+    db_api.user.dropUserDatabase(function() {
+      db_api.user.createUser('test@test.com', 'password', 'username', 'role', function (err, doc) {
         testUser = doc;
         assert.equal(err, null);
         assert.notEqual(testUser, null);
@@ -27,7 +27,7 @@ describe('Testing User collection:', function(){
    * post-condition
    */
   after(function(done) {
-    db_api.users.deleteUserById(testUser._id, function(err, user) {
+    db_api.user.deleteUserById(testUser._id, function(err, user) {
       assert.equal(err, null);
       assert.notEqual(user, null);
       user._id.should.eql(testUser._id);
@@ -39,7 +39,7 @@ describe('Testing User collection:', function(){
    * Tests whether user role is return properly.
    */
   it('retrieves user Role by ObjectID', function(done) {
-    db_api.users.getUserRoleById(testUser._id, function(err, role) {
+    db_api.user.getUserRoleById(testUser._id, function(err, role) {
       assert.equal(err, null);
       assert.notEqual(role, null);
       role.should.eql('role');
@@ -51,7 +51,7 @@ describe('Testing User collection:', function(){
    * Tests whether username is properly set.
    */
   it('set username by ObjectId', function(done) {
-    db_api.users.setUsernameById(testUser._id,'newUsername', function(err, doc) {
+    db_api.user.setUsernameById(testUser._id,'newUsername', function(err, doc) {
       assert.equal(err, null);
       assert.notEqual(doc, null);
       doc.username.should.eql('newUsername');//1 for success 0 for failure
@@ -63,7 +63,7 @@ describe('Testing User collection:', function(){
    * Test whether the function sets the name of the user properly.
    */
   it('set name by ObjectId: firstname, lastname', function(done) {
-    db_api.users.setNameById(testUser._id, 'firstname','lastname', function(err, doc) {
+    db_api.user.setNameById(testUser._id, 'firstname','lastname', function(err, doc) {
       assert.equal(err, null);
       assert.notEqual(doc, null);
       doc.name.first.should.eql('firstname');
@@ -76,7 +76,7 @@ describe('Testing User collection:', function(){
    * Tests whether a notification is properly added by the function.
    */
   it('Add notifications by ObjectId: id, type, title, url, date', function(done) {
-    db_api.users.addNotificationById(
+    db_api.user.notification.addNotificationById(
         testUser._id,
         {type_id: 1, title: 'title', url: 'url', date: new Date()},
         function(err, doc) {
@@ -93,7 +93,7 @@ describe('Testing User collection:', function(){
    * Tests whether notifications are properly retrieved.
    */
   it('retrieves notifications by ObjectId', function(done) {
-    db_api.users.getAllNotificationsById(testUser._id, function(err, notifications) {
+    db_api.user.notification.getAllNotificationsById(testUser._id, function(err, notifications) {
       assert.equal(err, null);
       assert.notEqual(notifications, null);
       assert.equal(notifications.length, 1);
@@ -108,7 +108,7 @@ describe('Testing User collection:', function(){
    * Tests whether a bookmark is properly added by the function.
    */
   it('Add bookmark by ObjectId: id, title, url', function(done) {
-    db_api.users.addBookmarkById(testUser._id, {title: "title",url:"url"}, function(err, user) {
+    db_api.user.bookmark.addBookmarkById(testUser._id, {title: "title",url:"url"}, function(err, user) {
       assert.equal(err, null);
       assert.notEqual(user, null);
       user.bookmarks.length.should.eql(1);
@@ -122,7 +122,7 @@ describe('Testing User collection:', function(){
    * Tests whether a a bookmark is properly retrieved.
    */
   it('retrieves bookmark by ObjectId: ObjectId', function(done) {
-    db_api.users.getBookmarksById(testUser._id, function(err, bookmarks) {
+    db_api.user.bookmark.getBookmarksById(testUser._id, function(err, bookmarks) {
       assert.equal(err, null);
       assert.notEqual(bookmarks, null);
       assert.equal(bookmarks.length, 1);
@@ -137,7 +137,7 @@ describe('Testing User collection:', function(){
    * Test ObjectID must be a 12-byte string.
    */
   it('retrieves user by ID: ID', function(done) {
-    db_api.users.getUserById(testUser._id, function(err, user) {
+    db_api.user.getUserById(testUser._id, function(err, user) {
       assert.equal(err, null);
       user.email.should.eql('test@test.com');
       done();
