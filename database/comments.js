@@ -2,7 +2,6 @@
  * Created by freddy on 3/19/15.
  */
 // var mongoose = require('mongoose');
-
 // var Schema = mongoose.Schema;
 
 // // Schema definition for comments

@@ -66,7 +66,7 @@ exports.createUser = function(email, password, username, role, callback) {
       callback("user with email " + email + " already exists.");
     }
     else {
-      userModel.create({
+      User.create({
         email: email,
         password: password,
         username: username,

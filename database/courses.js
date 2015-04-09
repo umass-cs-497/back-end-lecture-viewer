@@ -44,8 +44,8 @@ exports.roster = require('./rosters');
 /*
  Method to add a list of eligible emails to the course.
  */
-courseSchema.statics.addListOfEmailsById = function(courseId, emailList, callback) {
-  this.findById(courseId, function(err, course) {
+exports.addListOfEmailsById = function(courseId, emailList, callback) {
+  Course.findById(courseId, function(err, course) {
     if (err) {
       callback(err);
     }
@@ -69,8 +69,8 @@ courseSchema.statics.addListOfEmailsById = function(courseId, emailList, callbac
 /*
  Method to add list of lectures to course.
  */
-courseSchema.statics.addListOfLecturesById = function(courseId, lectureIdList, callback) {
-  this.findById(courseId, function(err, course) {
+exports.addListOfLecturesById = function(courseId, lectureIdList, callback) {
+  Course.findById(courseId, function(err, course) {
     if (err) {
       callback(err);
     }
@@ -94,8 +94,8 @@ courseSchema.statics.addListOfLecturesById = function(courseId, lectureIdList, c
 /*
   Method to add a list of  users to course.
  */
-courseSchema.statics.addListOfUsersById = function(courseId, userIdList, callback) {
-  this.findById(courseId, function(err, course) {
+exports.addListOfUsersById = function(courseId, userIdList, callback) {
+  Course.findById(courseId, function(err, course) {
     if (err) {
       callback(err);
     }
@@ -119,9 +119,8 @@ courseSchema.statics.addListOfUsersById = function(courseId, userIdList, callbac
 /*
   Method to create a course given basic info: semester, department (e.g, CMPSCI), course number(e.g, 497S).
  */
-courseSchema.statics.createCourse = function(semester, department, courseNumber, callback) {
-  var courseModel = this;
-  courseModel.find({
+exports.createCourse = function(semester, department, courseNumber, callback) {
+  Course.find({
     semester: semester,
     department: department,
     courseNumber: courseNumber
@@ -130,7 +129,7 @@ courseSchema.statics.createCourse = function(semester, department, courseNumber,
       callback(err);
     }
     else {
-      courseModel.create({
+      Course.create({
         courseNumber: courseNumber,
         department: department,
         semester: semester
@@ -142,8 +141,8 @@ courseSchema.statics.createCourse = function(semester, department, courseNumber,
 /*
   Method to remove all eligible emails from the course.
  */
-courseSchema.statics.deleteAllEmailsById = function(courseId, callback) {
-  this.findById(courseId, function(err, course) {
+exports.deleteAllEmailsById = function(courseId, callback) {
+  Course.findById(courseId, function(err, course) {
     if (err) {
       callback(err);
     }
@@ -166,8 +165,8 @@ courseSchema.statics.deleteAllEmailsById = function(courseId, callback) {
 /*
  Method to remove all registered users from the course.
  */
-courseSchema.statics.deleteAllLecturesById = function(courseId, callback) {
-  this.findById(courseId, function(err, course) {
+exports.deleteAllLecturesById = function(courseId, callback) {
+  Course.findById(courseId, function(err, course) {
     if (err) {
       callback(err);
     }
@@ -190,8 +189,8 @@ courseSchema.statics.deleteAllLecturesById = function(courseId, callback) {
 /*
  Method to remove all registered users from the course.
  */
-courseSchema.statics.deleteAllUsersById = function(courseId, callback) {
-  this.findById(courseId, function(err, course) {
+exports.deleteAllUsersById = function(courseId, callback) {
+  Course.findById(courseId, function(err, course) {
     if (err) {
       callback(err);
     }
@@ -214,9 +213,8 @@ courseSchema.statics.deleteAllUsersById = function(courseId, callback) {
 /*
  * Deletes a course by id.
  */
-courseSchema.statics.deleteCourseById = function(courseID, callback){
-  var courseModel = this;
-  courseModel.findByIdAndRemove(courseID,function(err, course){
+exports.deleteCourseById = function(courseID, callback){
+  Course.findByIdAndRemove(courseID,function(err, course){
     if(err){
       callback(err);
     }
@@ -230,8 +228,8 @@ courseSchema.statics.deleteCourseById = function(courseID, callback){
  * Method that will drop the database of the courses.
  * Just for testing. No need to be listed in public API.
  */
-courseSchema.statics.dropCoursesDatabase = function(callback) {
-  this.remove({}, function(err) {
+exports.dropCoursesDatabase = function(callback) {
+  Course.remove({}, function(err) {
     if (err) {
       console.log(err);
     }
@@ -245,8 +243,8 @@ courseSchema.statics.dropCoursesDatabase = function(callback) {
 /*
   Method to get course by courseId.
  */
-courseSchema.statics.getCourseById = function(id, callback) {
-  this.findById(id, function(err, course) {
+exports.getCourseById = function(id, callback) {
+  Course.findById(id, function(err, course) {
     if (err) {
       callback(err);
     }
@@ -262,8 +260,8 @@ courseSchema.statics.getCourseById = function(id, callback) {
 /*
  Method to get all eligible user emails by courseId.
  */
-courseSchema.statics.getEligibleEmailsById = function(id, callback) {
-  this.findById(id, function (err, course) {
+exports.getEligibleEmailsById = function(id, callback) {
+  Course.findById(id, function (err, course) {
     if (err) {
       callback(err);
     }
@@ -279,8 +277,8 @@ courseSchema.statics.getEligibleEmailsById = function(id, callback) {
 /*
   Method to get all registered accounts by courseId.
  */
-courseSchema.statics.getRegisteredUsersById = function(id, callback) {
-  this.findById(id)
+exports.getRegisteredUsersById = function(id, callback) {
+  Course.findById(id)
       .populate('registeredUsers')
       .exec(function(err, course) {
         if (err)
@@ -292,6 +290,6 @@ courseSchema.statics.getRegisteredUsersById = function(id, callback) {
       })
 };
 
-var Course = mongoose.model('Course', courseSchema);
+// var Course = mongoose.model('Course', courseSchema);
 
-exports.Course = Course;
+// exports.Course = Course;
