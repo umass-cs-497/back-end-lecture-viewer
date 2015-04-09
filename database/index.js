@@ -13,5 +13,5 @@ mongoose.connect('mongodb://freddy:freddy@ds043170.mongolab.com:43170/learn_u');
 //   comments: Comment
 // };
 
-exports.user = require('./user');
-exports.course = require('./course');
+exports.user = require('./users');
+exports.course = require('./courses');
