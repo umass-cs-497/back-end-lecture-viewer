@@ -1,6 +1,9 @@
-var mongoose = require('mongoose');
+/**
+ * Created by freddy on 3/19/15.
+ */
 
-var Schema = mongoose.Schema;
+// var mongoose = require('mongoose');
+// var Schema = mongoose.Schema;
 
 // Schema definition for users
 // var userSchema = new Schema({
@@ -24,6 +27,10 @@ var Schema = mongoose.Schema;
 //   }]
 // });
 
+var User = require('../models/user');
+exports.notification = require('./notification');
+exports.bookmark = require('./bookmark');
+
 /*
   Useful methods to access the User database.
   For getter methods, callback should in the form function(error, returned_data).
@@ -31,21 +38,10 @@ var Schema = mongoose.Schema;
  */
 
 /*
-  Method to add a bookmark to the user account with given email.
- */
-userSchema.statics.addBookmarkById = function(id, newBookmark, callback) {
-  this.findByIdAndUpdate(
-      id,
-      {$push: {bookmarks: newBookmark}},
-      callback
-  );
-};
-
-/*
   Method to add course to student account by email.
  */
-userSchema.statics.addCourseById = function(id, courseId, callback) {
-  this.findById(id, function(err, user) {
+exports.addCourseById = function(id, courseId, callback) {
+  User.findById(id, function(err, user) {
     if (err)
       callback(err);
     else if (!user)
@@ -57,17 +53,6 @@ userSchema.statics.addCourseById = function(id, courseId, callback) {
       callback(undefined, user);
     }
   });
-};
-
-/*
-  Method to add a notification to the user account with given email.
- */
-userSchema.statics.addNotificationById = function(id, newNotification, callback) {
-  this.findByIdAndUpdate(
-      id,
-      {$push: {notifications: newNotification}},
-      callback
-  );
 };
 
 /*
