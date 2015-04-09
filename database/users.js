@@ -28,8 +28,8 @@
 // });
 
 var User = require('../models/user');
-exports.notification = require('./notification');
-exports.bookmark = require('./bookmark');
+exports.notification = require('./notifications');
+exports.bookmark = require('./bookmarks');
 
 /*
   Useful methods to access the User database.
