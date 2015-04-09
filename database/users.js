@@ -58,9 +58,8 @@ exports.addCourseById = function(id, courseId, callback) {
 /*
   Method to create a user with the given email, password, username and role.
  */
-userSchema.statics.createUser = function(email, password, username, role, callback) {
-  var userModel = this;
-  userModel.findOne({email: email}, function(err, user) {
+exports.createUser = function(email, password, username, role, callback) {
+  User.findOne({email: email}, function(err, user) {
     if (err)
       callback(err);
     else if (user) {
@@ -80,9 +79,8 @@ userSchema.statics.createUser = function(email, password, username, role, callba
 /*
   Method to delete user from database by email
  */
-userSchema.statics.deleteUserById = function(id, callback) {
-  var userModel = this;
-  userModel.findByIdAndRemove(id, function(err, user) {
+exports.deleteUserById = function(id, callback) {
+  User.findByIdAndRemove(id, function(err, user) {
     if (err) {
       callback(err);
     }
@@ -96,8 +94,8 @@ userSchema.statics.deleteUserById = function(id, callback) {
   Method to drop the whole user collection.
   Just for testing. No need to be listed in public API.
  */
-userSchema.statics.dropUserDatabase = function(callback) {
-  this.remove({}, function(err) {
+exports.dropUserDatabase = function(callback) {
+  User.remove({}, function(err) {
     if (err) {
       console.log(err);
     }
@@ -109,27 +107,10 @@ userSchema.statics.dropUserDatabase = function(callback) {
 };
 
 /*
-  Method to get a user's bookmarks by user's email.
- */
-userSchema.statics.getBookmarksById = function(id, callback) {
-  this.findOne({_id: id}, function(err, user) {
-    if (err) {
-      callback(err);
-    }
-    else if (!user) {
-      callback("email does not exist.");
-    }
-    else {
-      callback(undefined, user.bookmarks);
-    }
-  });
-};
-
-/*
   Method to get a user's registered courses by user's email.
  */
-userSchema.statics.getCoursesById = function(id, callback) {
-  this.findById(id)
+exports.getCoursesById = function(id, callback) {
+  User.findById(id)
       .populate('courses')
       .exec(function(err, user) {
         if (err) {
@@ -145,27 +126,10 @@ userSchema.statics.getCoursesById = function(id, callback) {
 };
 
 /*
-  Method to get user's notifications by user's email.
- */
-userSchema.statics.getAllNotificationsById = function(id, callback) {
-  this.findById(id, function(err, user) {
-    if (err) {
-      callback(err);
-    }
-    else if (!user) {
-      callback("email does not exist.");
-    }
-    else {
-      callback(undefined, user.notifications);
-    }
-  });
-};
-
-/*
   Method to get user's role (student, instructor,...) by user's email.
  */
-userSchema.statics.getUserRoleById = function(id, callback) {
-  this.findById(id, function(err, user) {
+exports.getUserRoleById = function(id, callback) {
+  User.findById(id, function(err, user) {
     if (err) {
       callback(err);
     }
@@ -181,8 +145,8 @@ userSchema.statics.getUserRoleById = function(id, callback) {
 /*
   Method to get the whole user's document in the database by objectId.
  */
-userSchema.statics.getUserById = function(id, callback) {
-  this.findById(id, function(err, user) {
+exports.getUserById = function(id, callback) {
+  User.findById(id, function(err, user) {
     if (err)
       callback(err);
     else if (!user) {
@@ -197,8 +161,8 @@ userSchema.statics.getUserById = function(id, callback) {
 /*
   Method to change user first and last name.
  */
-userSchema.statics.setNameById = function(id, firstName, lastName, callback) {
-  this.findByIdAndUpdate(
+exports.setNameById = function(id, firstName, lastName, callback) {
+  User.findByIdAndUpdate(
       id,
       {$set: {name : {first: firstName, last: lastName}}},
       callback
@@ -208,15 +172,15 @@ userSchema.statics.setNameById = function(id, firstName, lastName, callback) {
 /*
   Method to update username.
  */
-userSchema.statics.setUsernameById = function(id, newUsername, callback) {
-  this.findByIdAndUpdate(
+exports.setUsernameById = function(id, newUsername, callback) {
+  User.findByIdAndUpdate(
       id,
       {$set: {username : newUsername}},
       callback
   );
 };
 
-var User = mongoose.model('User', userSchema);
+// var User = mongoose.model('User', userSchema);
 
-exports.User = User;
+// exports.User = User;
 
