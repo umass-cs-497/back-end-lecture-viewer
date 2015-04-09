@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+// Schema definition for courses
 var courseSchema = new Schema({
   courseNumber: String,
   courseSection: String,
@@ -27,4 +28,4 @@ var courseSchema = new Schema({
   title: String
 });
 
-module.exports = mongoose.model('Course', userSchema);
+module.exports = mongoose.model('Course', courseSchema);
