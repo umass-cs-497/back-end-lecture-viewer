@@ -1,4 +1,4 @@
-var Course = require('../models/course');
+var Course = require('./models/course');
 exports.lecture = require('./lectures');
 exports.comment = require('./comments');
 exports.attachment = require('./attachments');

@@ -7,6 +7,8 @@ require('./lecture').setup(router);
 require('./comment').setup(router);
 require('./attachment').setup(router);
 
+var database = require("../../database/index.js");
+
 //Create a course
 router.post('/', function(req,res) {
 
@@ -14,7 +16,7 @@ router.post('/', function(req,res) {
 
 //Get course
 router.get('/:course_id', function(req,res) {
-
+	
 });
 
 //Edit course

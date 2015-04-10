@@ -1,4 +1,4 @@
-var User = require('../models/user');
+var User = require('./models/user');
 
 /*
   Method to add a notification to the user account with given email.

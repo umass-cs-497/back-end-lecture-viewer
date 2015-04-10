@@ -1,7 +1,7 @@
 /**
  * Created by freddy on 3/16/15.
  */
-var Lecture = require('../models/lecture');
+var Lecture = require('./models/lecture');
 
 /*
   Methods to work with Lecture database.
