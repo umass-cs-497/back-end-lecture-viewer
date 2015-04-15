@@ -21,7 +21,7 @@ exports.getCommentsById = function(id, callback) {
       });
 };
 
-exports.getLectureById = function(id, callback) {
+exports.getLectureById = function(lectureId, callback) {
   Lecture.findById(id, function(err, lecture) {
     if (err) {
       callback(err);
@@ -36,19 +36,20 @@ exports.getLectureById = function(id, callback) {
 };
 
 /*
- * setLEctureVisibility: sets the visibility of a lecture.
+ * setLectureVisibility: sets the visibility of a lecture.
  */
- exports.setLectureVisibility = function(courseID, visibility, callback){
-	Lecture.update(courseID,
-		{$set:{visible: visibility}},
+ exports.setLectureVisibilityById = function(lectureId, visibility, callback){
+	Lecture.findByIdAndUpdate(
+		lectureId,
+		{visible: visibility},
 		callback
-		);
+	);
 }; 
 /*
- * getLEctureVisibility: gets the visibility of a lecture
+ * getLectureVisibility: gets the visibility of a lecture
  */
-exports.getLectureVisibility = function(courseID, callback){
-	Lecture.findById(courseID, function(err, lecture){
+exports.getLectureVisibilityById = function(lectureId, callback){
+	Lecture.findById(lectureId, function(err, lecture){
 		if(err){
 			callback(err);
 		}

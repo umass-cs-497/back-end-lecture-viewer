@@ -33,7 +33,7 @@ exports.addCourseById = function(id, courseId, callback) {
 /*
   Method to create a user with the given email, password, username and role.
  */
-exports.createUser = function(email, password, username, role, callback) {
+exports.createUser = function(email, password, firstName, lastName, role, callback) {
   User.findOne({email: email}, function(err, user) {
     if (err)
       callback(err);
@@ -44,9 +44,14 @@ exports.createUser = function(email, password, username, role, callback) {
       User.create({
         email: email,
         password: password,
-        username: username,
+        name: {
+          first: firstName,
+          last: lastName
+        },
         role: role
-      }, callback);
+      }, function(err, newUser) {
+	      callback(newUser._id);
+      });
     }
   });
 };
