@@ -25,6 +25,49 @@ app.use(session({ secret: 'umass497',
 // Activate path request logging in console
 app.use(devlog('dev'));
 
+
+app.use('*', function( req, res, next ) 
+{
+    
+    res.sendSuccess = function( data ) 
+    {
+         response = {
+            'status': 'success', 
+            'data': data
+        }
+
+        res.send(response); 
+    }
+
+    res.sendFail = function( message ) 
+    {
+        response = {
+            'status': 'fail', 
+            'data': {
+                'message': message
+            }
+        }
+
+        res.send(response);
+    }
+
+    res.sendError = function( message )
+    {
+        response = {
+            'status': 'error', 
+            'data': {
+                'message': message
+            }
+        }
+
+        res.send(response);
+    }
+
+
+    next();
+} );
+
+
 // Route to user and course
 app.use('/user', userRoutes);
 app.use('/course', courseRoutes);

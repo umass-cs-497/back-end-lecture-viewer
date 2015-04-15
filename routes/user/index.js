@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var validator = require('validator');
 
 var database = require("../../database/index.js");
 
@@ -8,117 +9,67 @@ require('./bookmark').setup(router);
 require('./notification').setup(router);
 
 /*-----MOCK DATA-------*/
-var mock_uid = '2394798792';
+/*var mock_uid = '2394798792';
 var mock_fname = 'Jane';
 var mock_lname = 'Doe';
 var mock_course_list = [{'name': 'CS497S Scalable Web Systems', 'id': '2348276591'}];
 var mock_profile_picture = 'http://faculty.sites.uci.edu/ltemplate/files/2011/04/generic_profile.jpg';
+*/
 /*-----MOCK DATA-------*/
 
 //Create an account
 router.post('/', function(req,res) {
     //Check if all required parameters are present
     if(req.body.email && req.body.password && req.body.first_name && req.body.last_name) {
-        /*res.send({'status': 'success',
-            'data': {
-                'user_id': mock_uid
-            }});*/
 
-            database.user.createUser(req.body.email,req.body.password,req.body.first_name + req.body.last_name,"student", function(err)
-                {
-                    if(err == undefined)
-                        res.send("User was created");
-                    else
-                        res.send(err);
-                });
+        //Verifies email is legit
+        if(!validator.isEmail(req.body.email))
+        {
+            res.sendFail("Not a valid email address");
+            return;
+        }
 
-        /*---------------------------------------
+        //Attempts to create new user using database methods
+        database.user.createUser(req.body.email,req.body.password,req.body.first_name + req.body.last_name,"student", function(err)
+        {
+            //If no error, send back user data
+            if(err == undefined)
+            {
+                //I will need the user data to be returned to me in a user variable
+                res.sendSuccess("Wooo!!! User Created");
 
-        Send verification email to req.body.email
+                /*---------------------------------------
 
-        ---------------------------------------*/
+                Send verification email to req.body.email
+
+                ---------------------------------------*/
+            }
+            else
+            {
+                //I will need to know why it failed... Logic problem or a legit error
+                res.sendFail(err);
+            }
+        });   
     }
     else {
-        res.send({'status': 'fail',
-            'data': {
-                'title': 'Incorrect parameters'
-            }
-        });
+        res.sendFail("Incorrect parameters");
     }
 });
 
 //Get logged in user info
 router.get('/', function(req,res) {
 
-    //55281ac4b87a13db50f8da7a
+    //Can't be completed until session is enabled
 
     var user_id = req.session.user_id;
 
     database.user.getUserById(user_id, function(err, user)
     {
         if(err)
-            res.send(err);
+            res.sendFail(err);
         else
-            res.send(user);
+            res.sendSuccess(user);
     });
-
-
-
-    /*res.send({'status': 'success',
-        'data': {
-            'first_name': mock_fname,
-            'last_name': mock_lname,
-            'course_list': mock_course_list
-        }
-    });*/
-});
-
-//Delete current user
-router.delete('/', function(req,res) {
-
-    //Delete user in database
-
-    res.send({'status': 'success'});
-});
-
-//Get user
-router.get('/:user_id', function(req,res) {
-
-    //Get user info from database
-
-    console.log(JSON.stringify(req.params) + " : " + JSON.stringify(req.body));
-
-    if(req.params.user_id == undefined)
-    {
-        res.send({'status': 'fail',
-        'data': {
-            'message' : 'No valid user_id parameter'
-        }});
-    }
-
-    database.user.getUserById(req.params.user_id, function(err, user)
-    {
-        if(err)
-            res.send(err);
-        else
-            res.send(user);
-    });
-
-    /*res.send({'status': 'success',
-        'data': {
-            'first_name': mock_fname,
-            'last_name': mock_lname,
-            'profile_picture': mock_profile_picture
-        }
-    });*/
-});
-
-//Edit user profile
-router.put('/:user_id', function(req,res) {
-
-    //Edit user in database
-
-    res.send({'status': 'success'});
 });
 
 //Delete a user
@@ -126,7 +77,101 @@ router.delete('/:user_id', function(req,res) {
 
     //Delete user in database
 
-    res.send({'status': 'success'});
+    //TODO check for admin rights
+
+    var user_id = req.params.user_id;//req.session.user_id;
+
+    if(user_id)
+    {
+        if(validator.isMongoId(user_id) == false)
+        {
+            res.sendFail("user_id provided is not a valid user_id");
+            return;
+        }
+
+        database.user.deleteUserById(user_id, function(err, user)
+        {
+            if(err)
+                res.sendFail(err);
+            else{
+                //Todo get user by id and send back here
+                res.sendSuccess(user);
+            }
+        });
+    }
+    else{
+        res.sendFail("Did not supply a user_id in the url");
+    }
+});
+
+//Delete current user
+router.delete('/', function(req,res) {
+
+    //Delete user in database
+
+    //Can't be completed until session is enabled
+
+    var user_id = req.session.user_id;
+
+    database.user.deleteUserById(user_id, function(err, user)
+    {
+        if(err)
+        {
+            res.sendFail(err);
+        }
+        else
+        {
+            res.sendSuccess(user);
+        }
+    });
+});
+
+//Get user
+router.get('/:user_id', function(req,res) {
+
+    //Get user info from database
+
+    if(req.params.user_id == undefined)
+    {
+        res.sendFail("No valid user_id parameter");
+    }
+    else if(validator.isMongoId(req.params.user_id) == false)
+    {
+        res.sendFail("User ID is not a valid MongoID");
+    }
+    else{
+        database.user.getUserById(req.params.user_id, function(err, user)
+        {
+            if(err)
+                res.sendFail(err);
+            else
+                res.sendSuccess(user);
+        });
+    }
+});
+
+//Edit user profile
+router.put('/:user_id', function(req,res) {
+
+    //Todo check if matches logged in or is admin?
+
+    var user_id = req.params.user_id;//req.session.user_id;
+
+    if(req.body.first_name || req.body.last_name)
+    {
+        database.user.setNameById(user_id, req.body.first_name, req.body.last_name, function(err)
+        {
+            if(err)
+                res.sendFail(err);
+            else{
+                //Todo get user by id and send back here
+                res.sendSuccess("Updated");
+            }
+        });
+    }
+    else{
+        res.sendFail("Did not supply a first_name or last_name to change");
+    }
 });
 
 module.exports = router;
