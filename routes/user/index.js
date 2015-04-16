@@ -30,13 +30,13 @@ router.post('/', function(req,res) {
         }
 
         //Attempts to create new user using database methods
-        database.user.createUser(req.body.email,req.body.password,req.body.first_name + req.body.last_name,"student", function(err)
+        database.user.createUser(req.body.email,req.body.password,req.body.first_name, req.body.last_name,"student", function(err, user_id)
         {
             //If no error, send back user data
             if(err == undefined)
             {
                 //I will need the user data to be returned to me in a user variable
-                res.sendSuccess("Wooo!!! User Created");
+                res.sendSuccess({"user_id" : user_id});
 
                 /*---------------------------------------
 

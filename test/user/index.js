@@ -2,6 +2,8 @@ var should  = require('should');
 var assert  = require('assert');
 var request = require('supertest');
 
+var database = require("../../database/index.js");
+
 var url = 'http://localhost:3000';
 var uidreq = 2359;
 
@@ -13,28 +15,47 @@ describe('User', function() {
                  first_name: 'Tim', 
                  last_name: 'Richards'};
 
-    it('/user [POST]', function(done) {
-        request(url)
-            .post('/user')
-            .send(body)
-            .end(function(err, res) {
-                res.body.status.should.equal('success');
+
+    describe('Creating a new user', function()
+    {
+        var user_id = "";
+
+        before(function(done) 
+        {
+            database.user.dropUserDatabase(function()
+            {
                 done();
             });
+        });
+
+        it('/user [POST]', function(done) {
+            request(url)
+                .post('/user')
+                .send(body)
+                .end(function(err, res) {
+
+                    console.log(res.body.data.user_id);
+
+                    user_id = res.body.data.user_id;
+
+                    res.body.status.should.equal('success');
+                    done();
+                });
+        });
+
+        it('/user/' + user_id + ' [GET]', function(done) {
+            request(url)
+                .get('/user/' + user_id)
+                .end(function(err, res) {
+                    if(err) return done(err);
+                    res.body.status.should.equal('success');
+                    res.body.data.should.have.properties('first_name', 'last_name', 'course_list');
+                    done();
+                });
+        });
     });
 
-    it('/user [GET]', function(done) {
-        request(url)
-            .get('/user')
-            .end(function(err, res) {
-                if(err) return done(err);
-                res.body.status.should.equal('success');
-                res.body.data.should.have.properties('first_name', 'last_name', 'course_list');
-                done();
-            });
-    });
-
-    it('/user [DELETE]', function(done) {
+    it('/user/ [DELETE]', function(done) {
         request(url)
             .delete('/user/')
             .end(function(err, res) {
