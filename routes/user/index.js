@@ -67,8 +67,18 @@ router.get('/', function(req,res) {
     {
         if(err)
             res.sendFail(err);
-        else
-            res.sendSuccess(user);
+        else{
+
+            var resUser = {};
+
+            //TODO add other stuff like courses, email, etc...
+
+            resUser.first_name = user.first_name;
+            resUser.last_name = user.last_name;
+            resUser.user_id = user_id;
+
+            res.sendSuccess(resUser);
+        }
     });
 });
 
@@ -144,8 +154,15 @@ router.get('/:user_id', function(req,res) {
         {
             if(err)
                 res.sendFail(err);
-            else
-                res.sendSuccess(user);
+            else{
+                var resUser = {};
+                
+                resUser.first_name = user.name.first;
+                resUser.last_name = user.name.last;
+                resUser.user_id = req.params.user_id;
+
+                res.sendSuccess(resUser);
+            }
         });
     }
 });

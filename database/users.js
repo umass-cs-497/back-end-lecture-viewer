@@ -77,12 +77,11 @@ exports.deleteUserById = function(id, callback) {
 exports.dropUserDatabase = function(callback) {
   User.remove({}, function(err) {
     if (err) {
-      console.log(err);
+      callback(err);
     }
     else {
-      console.log("user database dropped");
+      callback();
     }
-    callback();
   });
 };
 
