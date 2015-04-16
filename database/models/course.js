@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var courseSchema = new Schema({
   courseNumber: String,
   courseSection: String,
+	courseTitle: String,
   department: String,
   description: String,
   permission: Number,
@@ -25,7 +26,7 @@ var courseSchema = new Schema({
   // list of all eligible emails to view the course's material (different from registeredUsers above.)
   emails: [String],
   semester: String,
-  title: String
+	year: Number
 });
 
 module.exports = mongoose.model('Course', courseSchema);

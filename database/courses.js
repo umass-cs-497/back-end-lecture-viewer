@@ -88,20 +88,27 @@ exports.addListOfUsersById = function(courseId, userIdList, callback) {
 /*
   Method to create a course given basic info: semester, department (e.g, CMPSCI), course number(e.g, 497S).
  */
-exports.createCourse = function(semester, department, courseNumber, callback) {
+exports.createCourse = function(department, courseNumber, courseTitle, semester, year, instructor, callback) {
   Course.find({
     semester: semester,
-    department: department,
-    courseNumber: courseNumber
+	  year: year,
+	  department: department,
+	  courseNumber: courseNumber
   }, function(err, course) {
     if (err) {
       callback(err);
     }
+    else if (course) {
+	    callback(department + " " + courseNumber + " " + semester + " " + year + " already exists.")
+    }
     else {
       Course.create({
-        courseNumber: courseNumber,
-        department: department,
-        semester: semester
+	      department: department,
+	      courseNumber: courseNumber,
+	      courseTitle: courseTitle,
+	      instructor: instructor,
+	      semester: semester,
+	      year: year
       }, callback);
     }
   })
