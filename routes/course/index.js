@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var validator = require('validator');
 
 //Add module routes
 require('./roster').setup(router);
@@ -34,7 +35,7 @@ router.get('/:course_id', function(req,res) {
 	//Get course info from database
 	if(req.params.course_id == undefined) {
 		res.sendFail("No valid course_id parameter");
-	} else if() {
+	} else if(validator.isMongoId(req.params.course_id) == false) {
 		res.sendFail("Course ID is not a valid MongoID");
 	} else {
 		database.course.getCourseById(req.params.course_id, function(err, course) {
@@ -42,7 +43,7 @@ router.get('/:course_id', function(req,res) {
 				res.sendFail(err);	
 			} else {
 				// TODO: send back course
-				res.sendSuccess("Updated");	
+				res.sendSuccess("Got Course");	
 			}
 		});	
 	}	

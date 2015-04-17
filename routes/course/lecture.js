@@ -3,6 +3,8 @@ var fs = require('fs');
 var unzip = require('unzip');
 var uuid = require('node-uuid');
 var DecompressZip = require('decompress-zip');
+var validator = require('validator');
+var database = require("../../database/index.js");
 
 //Lecture API
 module.exports = {
@@ -96,17 +98,30 @@ module.exports = {
 
         //Get a specific lecture
         router.get('/:course_id/lecture/:lecture_id', function(req,res) {
-
+            if(req.params.course_id == undefined) {
+                res.sendFail("No valid lecture_id parameter");
+            } else if(validator.isMongoId(req.params.lecture_id) == false) {   
+                res.sendFail("Lecture ID is not a valid MongoID");
+            } else {
+                database.course.lecture.getLectureById(req.params.lecture_id, function(err, lecture) {
+                    if(err) {
+                        res.sendFail(err);  
+                    } else {
+                        // TODO: send back course
+                        res.sendSuccess("Got Lecture"); 
+                    }
+                });
+            }
         });
 
         //Edit a specific lecture
         router.put('/:course_id/lecture/:lecture_id', function(req,res) {
-
+            // TODO no update db call?
         });
 
         //Delete a user from a course's roster
         router.delete('/:course_id/lecture/:lecture_id', function(req,res) {
-
+            // TODO no delete user db call?
         });
     }
 };
