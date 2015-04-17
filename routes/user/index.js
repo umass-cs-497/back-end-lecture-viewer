@@ -82,6 +82,28 @@ router.get('/', function(req,res) {
     });
 });
 
+//Delete current user
+router.delete('/', function(req,res) {
+
+    //Delete user in database
+
+    //Can't be completed until session is enabled
+
+    var user_id = req.session.user_id;
+
+    database.user.deleteUserById(user_id, function(err, user)
+    {
+        if(err)
+        {
+            res.sendFail(err);
+        }
+        else
+        {
+            res.sendSuccess(user);
+        }
+    });
+});
+
 //Delete a user
 router.delete('/:user_id', function(req,res) {
 
@@ -114,27 +136,6 @@ router.delete('/:user_id', function(req,res) {
     }
 });
 
-//Delete current user
-router.delete('/', function(req,res) {
-
-    //Delete user in database
-
-    //Can't be completed until session is enabled
-
-    var user_id = req.session.user_id;
-
-    database.user.deleteUserById(user_id, function(err, user)
-    {
-        if(err)
-        {
-            res.sendFail(err);
-        }
-        else
-        {
-            res.sendSuccess(user);
-        }
-    });
-});
 
 //Get user
 router.get('/:user_id', function(req,res) {

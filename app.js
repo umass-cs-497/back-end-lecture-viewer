@@ -8,6 +8,7 @@ var port       = process.env.PORT || 3000;
 // Route locations
 var userRoutes = require('./routes/user/index');
 var courseRoutes = require('./routes/course/index');
+var authRoutes = require('./routes/auth/index');
 
 // Will need to eventually transition to Redis
 var session = require('express-session');
@@ -63,7 +64,6 @@ app.use('*', function( req, res, next )
         res.send(response);
     }
 
-
     next();
 } );
 
@@ -71,6 +71,7 @@ app.use('*', function( req, res, next )
 // Route to user and course
 app.use('/user', userRoutes);
 app.use('/course', courseRoutes);
+app.use('/auth', authRoutes);
 
 // Error handlers
 
