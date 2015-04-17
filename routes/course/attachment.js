@@ -68,7 +68,7 @@ module.exports = {
         //Delete an attachment from a lecture
         router.delete('/:course_id/lecture/:lecture_id/attachment/:attachment_id', function(req,res) 
         {
-
+            //TODO no delete specific attachment db call?
         });
     }
 };

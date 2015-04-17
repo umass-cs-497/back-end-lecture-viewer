@@ -140,7 +140,7 @@ module.exports = {
 
         //Delete a user from a course's roster
         router.delete('/:course_id/roster/:uid', function(req,res) {
-
+            // TODO no deletion of specific user from roster db call?
         });
     }
 };
