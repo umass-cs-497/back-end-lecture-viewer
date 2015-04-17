@@ -95,7 +95,7 @@ router.delete('/:user_id', function(req,res) {
     {
         if(validator.isMongoId(user_id) == false)
         {
-            res.sendFail("user_id provided is not a valid user_id");
+            res.sendFail("User ID is not a valid MongoID");
             return;
         }
 
@@ -156,7 +156,7 @@ router.get('/:user_id', function(req,res) {
                 res.sendFail(err);
             else{
                 var resUser = {};
-                
+
                 resUser.first_name = user.name.first;
                 resUser.last_name = user.name.last;
                 resUser.user_id = req.params.user_id;
@@ -174,20 +174,40 @@ router.put('/:user_id', function(req,res) {
 
     var user_id = req.params.user_id;//req.session.user_id;
 
-    if(req.body.first_name || req.body.last_name)
+    if(req.body.first_name == undefined || req.body.last_name == undefined)
     {
-        database.user.setNameById(user_id, req.body.first_name, req.body.last_name, function(err)
-        {
-            if(err)
-                res.sendFail(err);
-            else{
-                //Todo get user by id and send back here
-                res.sendSuccess("Updated");
-            }
-        });
+        res.sendFail("Did not supply a first_name and last_name");
+    }
+    else if(validator.isMongoId(user_id) == false)
+    {
+        res.sendFail("User ID is not a valid MongoID");
     }
     else{
-        res.sendFail("Did not supply a first_name or last_name to change");
+        database.user.setNameById(user_id, req.body.first_name, req.body.last_name, function(err,user)
+        {
+            if(err || user == null || user == undefined)
+            {
+                if(!err && !user)
+                {
+                    res.sendFail("userID does not exist");
+                }
+                else
+                {
+                    res.sendError(err);
+                }
+            }
+            else{
+
+                var resUser = {};
+
+                resUser.first_name = user.name.first;
+                resUser.last_name = user.name.last;
+                resUser.email = user.email;
+                resUser.user_id = user._id;
+
+                res.sendSuccess(resUser);
+            }
+        });
     }
 });
 

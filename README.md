@@ -10,3 +10,7 @@ Testing
 2. Open another terminal and type 'make test' or 'npm test'
 
 If this doesn't work, make sure you have the most up to date libraries by running 'npm install'
+
+API Documentation
+=================
+http://umass-cs-497.github.io/back-end-lecture-viewer/apiV1.html
