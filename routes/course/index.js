@@ -12,9 +12,9 @@ var database = require("../../database/index.js");
 //Create a course
 router.post('/', function(req,res) {
 	// Check if all required parameters are present
-	if(req.body.semester && req.body.department && req.body.courseNumber) {
+	if(req.body.department && req.body.courseNumber && req.body.courseTitle && req.body.semester && req.body.year && req.body.instructor) {
 		// Attempts to create new course using database methods
-		database.course.createCourse(req.body.semester, req.body.department, req.body.courseNumber, function(err) {
+		database.course.createCourse(req.body.department, req.body.courseNumber, req.body.courseTitle, req.body.semester, req.body.year, req.body.instructor, function(err) {
 			//If no error, send back course data
 			if(err == undefined) {
 				//I will need the user data to be returned to me in a user variable
@@ -50,7 +50,7 @@ router.get('/:course_id', function(req,res) {
 
 //Edit course
 router.put('/:course_id', function(req,res) {
-	//TODO
+	//TODO - no update course method in db?
 });
 
 //Delete course
