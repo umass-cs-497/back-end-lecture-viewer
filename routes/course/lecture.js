@@ -98,20 +98,20 @@ module.exports = {
 
         //Get a specific lecture
         router.get('/:course_id/lecture/:lecture_id', function(req,res) {
-            if(req.params.course_id == undefined) {
-                res.sendFail("No valid lecture_id parameter");
-            } else if(validator.isMongoId(req.params.lecture_id) == false) {   
-                res.sendFail("Lecture ID is not a valid MongoID");
-            } else {
-                database.course.lecture.getLectureById(req.params.lecture_id, function(err, lecture) {
-                    if(err) {
-                        res.sendFail(err);  
-                    } else {
-                        // TODO: send back course
-                        res.sendSuccess("Got Lecture"); 
-                    }
-                });
-            }
+            // if(req.params.course_id == undefined) {
+            //     res.sendFail("No valid lecture_id parameter");
+            // } else if(validator.isMongoId(req.params.lecture_id) == false) {   
+            //     res.sendFail("Lecture ID is not a valid MongoID");
+            // } else {
+            //     database.course.lecture.getLectureById(req.params.lecture_id, function(err, lecture) {
+            //         if(err) {
+            //             res.sendFail(err);  
+            //         } else {
+            //             // TODO: send back course
+            //             res.sendSuccess("Got Lecture"); 
+            //         }
+            //     });
+            // }
         });
 
         //Edit a specific lecture
