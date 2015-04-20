@@ -68,10 +68,11 @@ exports.getLectureVisibilityById = function(lectureId, callback){
 /*
  * Adds a comment to a lecture
  */
-exports.addCommentToLecture = function(lectureId, comment, callback){
+exports.addCommentToLecture = function(lectureId, comment, callback) {
     Lecture.findByIdAndUpdate(
-    lectureId,
-    {comments: comments.push(comment)},
-    callback
-  );
+        lectureId, {
+            comments.push(comment)
+        },
+        callback
+    );
 };
