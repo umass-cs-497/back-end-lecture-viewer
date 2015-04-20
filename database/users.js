@@ -190,7 +190,7 @@ exports.setUserRoleById = function(id, newUserRole, callback) {
 /*
  * Updates user's role by Email
  */
-exports.setUserRoleById = function(email, newUserRole, callback) {
+exports.setUserRoleByEmail = function(email, newUserRole, callback) {
   this.findOneAndUpdate(
       {email: email},
       {$set: {role : newUserRole}},
