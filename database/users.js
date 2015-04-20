@@ -179,9 +179,20 @@ exports.setUsernameById = function(id, newUsername, callback) {
 /*
  * Updates user's role by id
  */
-userSchema.statics.setUserRoleById = function(id, newUserRole, callback) {
+exports.setUserRoleById = function(id, newUserRole, callback) {
   this.findByIdAndUpdate(
       id,
+      {$set: {role : newUserRole}},
+      callback
+  );
+};
+
+/*
+ * Updates user's role by Email
+ */
+exports.setUserRoleById = function(email, newUserRole, callback) {
+  this.findOneAndUpdate(
+      {email: email},
       {$set: {role : newUserRole}},
       callback
   );
