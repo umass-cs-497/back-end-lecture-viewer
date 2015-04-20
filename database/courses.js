@@ -99,7 +99,7 @@ exports.createCourse = function(department, courseNumber, courseTitle, semester,
       callback(err);
     }
     else if (course) {
-	    callback(department + " " + courseNumber + " " + semester + " " + year + " already exists.")
+	    callback(department + " " + courseNumber + " " + semester + " " + year + " already exists.");
     }
     else {
       Course.create({
