@@ -21,6 +21,9 @@ exports.getCommentsById = function(id, callback) {
       });
 };
 
+/*
+ * Gets lecture by ID
+ */
 exports.getLectureById = function(lectureId, callback) {
   Lecture.findById(id, function(err, lecture) {
     if (err) {
@@ -60,4 +63,15 @@ exports.getLectureVisibilityById = function(lectureId, callback){
 			callback(undefined,lecture.visible);
 		}
 	});
+};
+
+/*
+ * Adds a comment to a lecture
+ */
+exports.addCommentToLecture = function(lectureId, comment, callback){
+    Lecture.findByIdAndUpdate(
+    lectureId,
+    {comments: comments.push(comment)},
+    callback
+  );
 };
